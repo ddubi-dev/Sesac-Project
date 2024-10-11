@@ -1,12 +1,15 @@
 table {
   width: 50%;
+  height: 50%;
 }
 
 th {
   width: 10%;
   background-color: blanchedalmond;
 }
+
 td {
+  padding: 5px;
   height: 50px;
   text-align: left; /*가로방향, 좌측 정렬*/
   vertical-align: top; /*세로방향, 상단 정렬*/
@@ -33,7 +36,18 @@ button {
 button:hover {
   color: blue;
 }
-/* 
+
+table th:first-child,
+table td:first-child {
+  color: red;
+}
+
+table th:last-child,
+table td:last-child {
+  color: blue;
+}
+
 img {
-  max-height: 300px;
-} */
+  width: 50%;
+  height: 30%;
+}
