@@ -1,21 +1,60 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>자기소개 페이지</title>
+    <title>SH's portfolio</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>나를 소개합니다.</h1>
-    <ul>
-      <li>이름: 김수현</li>
-      <li>희망 직종: 프론트엔드 개발</li>
-      <li>(희망)Language: Typescript, Dart, Java</li>
-      <li>(희망)Framework: React, Flutter</li>
-      <li>(희망)자격증: 정보처리기사, SQLD, OPIc IH</li>
-      <li><a href="portfolio.html">포트폴리오</a></li>
+    <header>
+      <h1 id="title">Portfolio</h1>
+    </header>
+    <nav>
+      <hr />
+      <!-- introduce projects contact -->
+      <span id="intro">Introduce</span>
+      <span id="projects">Projects</span>
+      <span id="contact">Contact_Info</span>
+      <hr />
+    </nav>
 
-      <li><a href="personality.html">개인</li>
-      
-    </ul>
+    <main>
+      <!-- introduce -->
+      <div id="profile">
+        <p id="intro_title">Introduce</p>
+        <img id="profile_img" src="img/profile.png" alt="증명사진" />
+
+        <div id="profile_txt">
+          <div>
+            <p>이름: 김수현</p>
+          </div>
+          <div>
+            <p>희망 직종: 프론트엔드 개발</p>
+            <p>(희망)Language: Typescript, Dart, Java</p>
+            <p>(희망)Framework: React, Flutter</p>
+            <p>(희망)자격증: 정보처리기사, SQLD, OPIc IH</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- projects -->
+      <div>
+        <p id="projects_title">Projects</p>
+        <a href="project1.html"
+          ><img class="projects_img" src="img/background.png" alt="project"
+        /></a>
+        <a href="project2.html"
+          ><img class="projects_img" src="img/background.png" alt="project"
+        /></a>
+      </div>
+
+      <!-- Contact_Info -->
+      <div>
+        <p id="contact_title">Contact_Info</p>
+      </div>
+    </main>
+
+    <footer></footer>
+    <!-- <p><a href="portfolio.html">포트폴리오</a></p> -->
+    <!-- <p><a href="personality.html">개인</p> -->
   </body>
 </html>

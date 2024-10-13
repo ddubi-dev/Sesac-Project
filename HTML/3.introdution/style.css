@@ -1,3 +1,50 @@
-li {
-  margin-bottom: 10px;
+#title {
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  font-size: 40px; /* 큰 글씨 */
+}
+
+nav {
+  font-weight: bold; /* 굵게 */
+  font-size: 20px; /* 큰 글씨 */
+}
+
+#intro {
+  margin-left: 20.5%;
+}
+
+#projects {
+  margin-left: 20.5%;
+}
+
+#contact {
+  margin-left: 20.5%;
+}
+
+#profile_img,
+#profile_txt {
+  margin-top: 25px;
+  display: inline-block;
+}
+
+#profile_img {
+  margin-right: 50px;
+  margin-left: 300px;
+  max-width: 180px;
+}
+
+#intro_title,
+#projects_title,
+#contact_title {
+  font-weight: bold; /* 굵게 */
+  margin-left: 100px;
+  margin-top: 50px;
+  font-size: 24px; /* 큰 글씨 */
+}
+
+.projects_img {
+  width: 800px;
+  margin-left: 250px;
+  margin-bottom: 50px;
 }
