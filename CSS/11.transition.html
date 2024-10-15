@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+      .square {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        transition-property: width, height;
+        /* 내가 무엇을 바꿀 것이냐 */
+        /* 어떤 행위를 해야 동작 */
+        /* animation은 안해도 바로 동작 */
+        transition-duration: 0.5s;
+        transition-timing-function: ease;
+      }
+      .square:hover {
+        width: 200px;
+        height: 200px;
+      }
+
+      .button {
+        font-size: 30px;
+        height: 50px;
+        color: black;
+        transition-duration: 2s;
+        transition-timing-function: ease;
+      }
+      .button:hover {
+        color: red;
+      }
+
+      .image {
+        width: 200px;
+        transition-property: transform;
+        transition-duration: 0.5s;
+        transition-timing-function: ease-in-out;
+      }
+      .image:hover {
+        transform: rotate(180deg);
+      }
+
+      .gradient {
+        height: 200px;
+
+        background: linear-gradient(to right, red, lightgreen);
+        transition-property: background;
+        transition-duration: 0.2;
+      }
+      .gradient.gradient:hover {
+        background: linear-gradient(to right, lightgreen, red);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="square"></div>
+    <br />
+    <button class="button">Hover me</button>
+    <br />
+    <br />
+    <img src="images/cat2.jpg" alt="고양이" class="image" />
+    <br />
+    <div class="gradient">Hover me for gradient effect</div>
+  </body>
+</html>
