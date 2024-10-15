@@ -1,0 +1,39 @@
+* {
+  box-sizing: border-box;
+}
+
+header {
+  background-color: #555;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+nav {
+  background-color: #ccc;
+  padding: 20px;
+  float: left;
+  width: 30%;
+  height: 300px;
+}
+
+article {
+  float: left;
+  width: 70%;
+  padding: 20px;
+  height: 300px;
+}
+
+footer {
+  background-color: #777;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+@media (max-width: 600px) {
+  nav,
+  article {
+    width: 100%;
+  }
+}

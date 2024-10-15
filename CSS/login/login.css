@@ -1,0 +1,76 @@
+body {
+  background-color: #2b2756;
+  display: flex;
+  justify-content: center;
+  /*수평 중앙 정렬*/
+  align-items: center;
+  /*수직 중앙 정렬*/
+  height: 100vh;
+  /*화면의높이를 설정함, 전체 뷰포트 높이*/
+}
+
+.signup,
+.login {
+  width: 370px;
+  height: 550px;
+  text-align: center;
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 1);
+  /* 그림자 */
+  /* 수평 수직 블러 색상(+투명도) */
+
+  display: flex;
+  flex-direction: column;
+  /*세로 방향 정렬*/
+  justify-content: center;
+
+  z-index: 1;
+}
+
+.signup {
+  color: #f7f7f7;
+  background-color: #120f23;
+  background: linear-gradient(to bottom, #1a1732, #2e2a58, #181432);
+  /* 그라데이션 */
+}
+
+.login {
+  color: #543d85;
+  background-color: #f7f7f7;
+}
+
+.signup label,
+.login label {
+  display: block;
+  /*label이 inline요소라서 bottom이 안될 수 있음 */
+  /* display: block(한줄전체차지) or flex(유연한 레이아웃) 를 이용해야함 */
+
+  margin-bottom: 70px;
+
+  font-size: 32px;
+  font-family: "휴먼둥근헤드라인";
+}
+
+.signup input,
+.login input {
+  width: 230px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #e0dede;
+  color: #9391a0;
+  margin-bottom: 20px;
+  border-style: none;
+  padding-left: 10px;
+  font-weight: bold;
+}
+
+.signup button,
+.login button {
+  width: 210px;
+  height: 40px;
+  background-color: #543d85;
+  color: #f7f7f7;
+  font-family: "휴먼둥근헤드라인";
+  border-radius: 6px;
+  border-style: none;
+}

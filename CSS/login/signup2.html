@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <style>
+      body {
+        background-color: #2b2756;
+        display: flex;
+        justify-content: center; /* 수평 중앙 정렬 */
+        align-items: center; /* 수직 중앙 정렬 */
+        height: 100vh; /* 화면의 높이를 설정함, 전체 뷰포트 높이 */
+        margin: 0; /* 기본 마진 제거 */
+      }
+
+      .main {
+        position: relative; /* 부모 요소에 상대적 위치 설정 */
+        width: 370px; /* 고정 너비 설정 */
+        height: 550px; /* 고정 높이 설정 */
+        overflow: hidden; /* 내용이 넘칠 경우 숨김 */
+      }
+
+      .signup,
+      .login {
+        position: absolute; /* 절대 위치로 설정 */
+        top: 0; /* 상단 정렬 */
+        left: 0; /* 왼쪽 정렬 */
+        width: 100%; /* 전체 너비 사용 */
+        height: 100%; /* 전체 높이 사용 */
+        text-align: center;
+        border-radius: 20px;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 1); /* 그림자 */
+        display: flex;
+        flex-direction: column; /* 세로 방향 정렬 */
+        justify-content: center; /* 수직 중앙 정렬 */
+        transition: transform 0.5s ease; /* 슬라이드 애니메이션 효과 */
+      }
+
+      .signup {
+        color: #f7f7f7;
+        background: linear-gradient(
+          to bottom,
+          #1a1732,
+          #2e2a58,
+          #181432
+        ); /* 그라데이션 */
+      }
+
+      .login {
+        color: #543d85;
+        background-color: #f7f7f7;
+        transform: translateY(100%); /* 로그인 화면을 아래로 숨김 */
+      }
+
+      .signup label,
+      .login label {
+        display: block; /* label이 inline 요소라서 bottom이 안될 수 있음 */
+        margin-bottom: 70px;
+        font-size: 32px;
+        font-family: "휴먼둥근헤드라인";
+        cursor: pointer; /* 커서 변경 */
+      }
+
+      .signup input,
+      .login input {
+        width: 230px;
+        height: 40px;
+        border-radius: 5px;
+        background-color: #e0dede;
+        color: #9391a0;
+        margin-bottom: 20px;
+        border-style: none;
+        padding-left: 10px;
+        font-weight: bold;
+      }
+
+      .signup button,
+      .login button {
+        width: 210px;
+        height: 40px;
+        background-color: #543d85;
+        color: #f7f7f7;
+        font-family: "휴먼둥근헤드라인";
+        border-radius: 6px;
+        border-style: none;
+        cursor: pointer; /* 커서 변경 */
+      }
+
+      .toggle-button {
+        margin-top: 20px; /* 버튼 사이의 간격 */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <div class="signup">
+        <form>
+          <label id="signupLabel">Sign up</label>
+          <input type="text" placeholder="Username" />
+          <input type="email" placeholder="Email" />
+          <input type="password" placeholder="Password" />
+          <button type="button" class="toggle-button" id="goToLogin">
+            Go to Login
+          </button>
+        </form>
+      </div>
+      <div class="login">
+        <form>
+          <label id="loginLabel">Login</label>
+          <input type="email" placeholder="Email" />
+          <input type="password" placeholder="Password" />
+          <button type="button" class="toggle-button" id="goToSignup">
+            Go to Signup
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      const goToLoginButton = document.getElementById("goToLogin");
+      const goToSignupButton = document.getElementById("goToSignup");
+      const signupDiv = document.querySelector(".signup");
+      const loginDiv = document.querySelector(".login");
+      const signupLabel = document.getElementById("signupLabel");
+
+      // Go to Login
+      goToLoginButton.addEventListener("click", () => {
+        signupDiv.style.transform = "translateY(-100%)"; // Sign up 화면을 위로 이동
+        loginDiv.style.transform = "translateY(0)"; // Login 화면이 위로 슬라이드
+      });
+
+      // Go to Signup
+      goToSignupButton.addEventListener("click", () => {
+        signupDiv.style.transform = "translateY(0)"; // Sign up 화면이 다시 보이게
+        loginDiv.style.transform = "translateY(100%)"; // Login 화면을 아래로 이동
+      });
+
+      // Signup label 클릭 시 로그인 화면으로 이동
+      signupLabel.addEventListener("click", () => {
+        signupDiv.style.transform = "translateY(-100%)"; // Sign up 화면을 위로 이동
+        loginDiv.style.transform = "translateY(0)"; // Login 화면이 위로 슬라이드
+      });
+    </script>
+  </body>
+</html>
