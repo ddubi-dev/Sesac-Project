@@ -78,5 +78,3 @@ const elementsToInsert = [4, 5, 6];
 
 originalArray.splice(1, 2, ...elementsToInsert); // XXXX, 1번 인덱스부터 2개를 삭제후, 중간에 삽입
 console.log(originalArray);
-
-//-----------------배열 합치기, concat------------------

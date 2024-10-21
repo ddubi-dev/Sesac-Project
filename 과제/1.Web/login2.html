@@ -4,9 +4,53 @@
     <meta charset="UTF-8" />
     <title>Document</title>
     <style>
+      #circle1,
+      #circle2 {
+        width: 250px;
+        height: 250px;
+        border-radius: 50%;
+        position: absolute;
+      }
+
+      #circle1 {
+        background-color: rgb(21, 138, 211);
+        left: 10%;
+        top: 10px;
+      }
+
+      #circle2 {
+        background-color: darkorange;
+        bottom: 5%;
+        right: 10%;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        background-color: black;
+      }
+      #entire {
+        z-index: 2;
+        height: 500px;
+        background-color: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      h1 {
+        text-align: center;
+        color: white;
+      }
+
       p {
         margin: 0;
         margin-bottom: 10px;
+        text-align: left;
+        border-radius: 5px;
+        font-weight: bold;
+        color: white;
       }
 
       #username {
@@ -15,18 +59,46 @@
 
       input {
         width: 300px;
-        height: 40px;
+        height: 45px;
         padding-left: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      input::placeholder {
+        color: white;
       }
 
       #logIn {
         margin-top: 50px;
         width: 315px;
-        height: 40px;
+        height: 50px;
+        border: none;
+        background-color: white;
+        border-radius: 5px;
+        font-size: 17px;
+        font-weight: bold;
       }
 
       #socialLogin {
-        margin-top: 25px;
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      #socialLogin button {
+        width: 150px;
+        height: 40px;
+
+        border: none;
+        background-color: lightgray;
+        border-radius: 5px;
+        font-size: 16px;
+        font-weight: bold;
+        color: white;
+
+        background-color: rgba(255, 255, 255, 0.2);
       }
     </style>
     <link
@@ -36,7 +108,10 @@
   </head>
 
   <body>
-    <div>
+    <div id="circle1"></div>
+    <div id="circle2"></div>
+
+    <div id="entire">
       <h1>Login Here</h1>
       <div id="username">
         <p>Username</p>
@@ -44,13 +119,14 @@
       </div>
       <div>
         <p>Password</p>
-        <input type="text" name="" id="" placeholder="password" />
+        <input type="text" name="" id="" placeholder="Password" />
       </div>
 
       <button id="logIn">Log In</button>
+
       <div id="socialLogin">
-        <button><i class="fa-brands fa-google"></i>Google</button>
-        <button><i class="fa-brands fa-facebook"></i>Facebook</button>
+        <button><i class="fa-brands fa-google"></i> Google</button>
+        <button><i class="fa-brands fa-facebook"></i> Facebook</button>
       </div>
     </div>
   </body>
