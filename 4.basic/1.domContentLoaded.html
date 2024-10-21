@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // DOM이 모두 로딩된 후()
+      //   document.addEventListener("DOMContentLoaded", 함수명);        // 1. 외부 함수 등록
+      //   document.addEventListener("DOMContentLoaded", function(){});  // 2. 함수 빌트인 - 익명 함수
+      //   document.addEventListener("DOMContentLoaded", ()=>{});        // 3. 함수 빌트인 - 화살표함수
+
+      document.addEventListener("DOMContentLoaded", function () {
+        //한번만 쓸 함수
+        //함수가 불리는 시점은 dom이 로딩 완료되었을 때.
+        //CSS나 IMG 이런 실제 모든 콘텐츠는 로딩이 되었다고 보장할 수 없다.
+        console.log("DOM 이 완전히 로딩되었음");
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+      #container {
+        display: inline-block;
+        width: 200px;
+        height: 200px;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        /* 이미지가 잘려도 크기에 맞게 채움 */
+      }
+
+      #space {
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Image Gallery</h1>
+    <div id="container"><img id="cat1" src="cat1.jpg" alt="" /></div>
+    <div id="container"><img id="cat2" src="cat2.jpg" alt="" /></div>
+    <div id="container"><img id="cat3" src="cat3.jpg" alt="" /></div>
+    <div id="space"></div>
+
+    <script>
+      const cats = document.getElementsByTagName("img");
+
+      Array.from(cats).forEach((cat) => {
+        cat.addEventListener("click", (e) => {
+          console.log(e.target);
+
+          document.getElementById("space").innerHTML = e.target.outerHTML;
+          //   e.target은 텍스트가 아니라 dom요소, 이미지 그 자체
+          //   outerHTML은 dom 요소의 전체 코드를 문자열 형태로 반환하는 속성
+        });
+      });
+    </script>
+  </body>
+</html>

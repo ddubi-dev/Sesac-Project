@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+      #progressBar {
+        width: 100%;
+        background-color: #ededed;
+      }
+
+      #progress {
+        width: 0%;
+        height: 30px;
+        background-color: #4caf50;
+      }
+
+      #progressText {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        color: black;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>프로그래스바를 만들어보기</h1>
+    <input id="timeInput" type="number" placeholder="초 입력" min="1" />
+    <button id="startButton">시작</button>
+    <button id="resetButton">초기화</button>
+    <div id="progressBar">
+      <div id="progress">
+        <span id="progressText">0%</span>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // ★암기, 돔이 다 불러지면 그때 이 안의 함수가 실행됨.
+        const startButton = document.getElementById("startButton");
+        const resetButton = document.getElementById("resetButton");
+        const progressBar = document.getElementById("progress");
+        const timeInput = document.getElementById("timeInput");
+        const progressText = document.getElementById("progressText");
+
+        let interval; // 타이머 인터벌을 저장할 변수
+        let duration; // 현재 진행 시점을 저장할 변수
+
+        startButton.addEventListener("click", startProgress);
+        resetButton.addEventListener("click", resetProgress);
+
+        function startProgress() {
+          let timePassed = 0;
+          duration = parseInt(timeInput.value, 10);
+          progressBar.style.width = "0%"; // 초기에 0으로 시작해서 매초마다 이걸 증가
+
+          interval = setInterval(() => {
+            timePassed++;
+
+            let progress = (timePassed / duration) * 100; // 진행률 계산
+            progressBar.style.width = `${progress}%`; // 진행률 바 업데이트
+            // console.log(
+            //   "timePassed: " +
+            //     timePassed +
+            //     ", duration: " +
+            //     duration +
+            //     ", progress: " +
+            //     progress
+            // );
+
+            progressText.textContent = `${progress}%`;
+            // progressBar.textContent = `${progress}%`;
+            // progressBar.style.alignContent = "center"; // 상하 간격 중간
+            // progressBar.style.justifyContent = "center"; //좌우 간격 중간
+
+            if (timePassed >= duration) {
+              // 지정된 시간이 초과
+              clearInterval(interval); // 동작 시켜둔 타이머를 중지
+            }
+          }, 1000); // 매 1초마다(1000ms) 마다 이 안에 함수를 반복 실행한다.
+        }
+        function resetProgress() {
+          progressBar.style.width = "0%";
+          timeInput.value = "";
+          clearInterval(interval);
+        }
+      });
+    </script>
+  </body>
+</html>

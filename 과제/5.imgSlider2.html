@@ -1,0 +1,110 @@
+<!-- 이미지 슬라이더2
+1. 이미지를 넣을 공간(overflow:hidden)
+2. 버튼(덮어쓰기)
+3. 이미지 이동
+4. 이미지 양 끝 움직임 정지 -->
+
+<!-- https://chatgpt.com/c/6711bd6d-2d88-8008-bef2-0be791611b8f -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+      #container {
+        display: flex;
+        align-items: center; /* 수평 */
+        flex-direction: column;
+      }
+
+      #space {
+        width: 400px;
+        height: 400px;
+        display: flex;
+        overflow: hidden;
+
+        /* transition: transform 0.5s ease-in-out; */
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      #buttonContainer {
+        display: flex;
+        justify-content: space-between;
+        width: 400px;
+        position: absolute;
+        /* 문서 흐름을 제거하고, 
+        가장 가까운 위치 지정된 조상요소를 기준으로
+        해당 요소의 위치를 직접 제어 가능  */
+
+        top: 200px;
+      }
+
+      button {
+        width: 70px;
+        height: 30px;
+        margin-top: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="space">
+        <img src="cat1.jpg" alt="" />
+        <img src="cat2.jpg" alt="" />
+        <img src="cat3.jpg" alt="" />
+      </div>
+      <div id="buttonContainer">
+        <button id="Previous">Previous</button>
+        <button id="Next">Next</button>
+      </div>
+    </div>
+
+    <script>
+      let num = 0;
+      document.getElementById("Next").addEventListener("click", () => {
+        if (num == 2) {
+        } else {
+          num++;
+        }
+      });
+    </script>
+    <!-- <script>
+      let num = 0;
+      document.getElementById("Previous").addEventListener("click", () => {
+        if (num == 0) {
+          document.getElementById("space").innerHTML = '<img src="cat3.jpg">';
+        } else if (num == 1) {
+          document.getElementById("space").innerHTML = '<img src="cat1.jpg">';
+        } else if (num == 2) {
+          document.getElementById("space").innerHTML = '<img src="cat2.jpg">';
+        }
+        num--;
+        if (num == -1) {
+          num = 2;
+        }
+      });
+
+      document.getElementById("Next").addEventListener("click", () => {
+        if (num == 0) {
+          document.getElementById("space").innerHTML = '<img src="cat2.jpg">';
+        } else if (num == 1) {
+          document.getElementById("space").innerHTML = '<img src="cat3.jpg">';
+        } else if (num == 2) {
+          document.getElementById("space").innerHTML = '<img src="cat1.jpg">';
+        }
+        num++;
+        if (num == 3) {
+          num = 0;
+        }
+      });
+    </script> -->
+  </body>
+</html>

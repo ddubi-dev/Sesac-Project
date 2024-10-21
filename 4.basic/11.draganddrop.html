@@ -1,0 +1,62 @@
+<!-- 하나의 아이템 drop -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+      #dragItem {
+        width: 100px;
+        height: 100px;
+        background-color: yellow;
+        cursor: pointer;
+        margin: 10px;
+      }
+
+      #dropZone {
+        width: 200px;
+        height: 200px;
+        margin-top: 50px;
+        border: 2px dashed gray;
+        background-color: lightgray;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="dragItem" draggable="true">Drag Me</div>
+    <div id="dropZone">Drop here</div>
+    <script>
+      const dragItem = document.getElementById("dragItem");
+      const dropZone = document.getElementById("dropZone");
+
+      dragItem.addEventListener("dragstart", (e) => {
+        console.log("드래그 시작 중" + e.target.id);
+        e.dataTransfer.setData("target", event.target.id);
+        // 이벤트 객체 안의 dataTransfer라는 객체 안에 내가 원하는 key, value로 저장 가능
+        // {"target", id} 이런 형태로 데이터를 저장중...
+      });
+
+      dropZone.addEventListener("dragover", (e) => {
+        e.preventDefault(); // 웹 브라우저 본연의 기능 비활성화 (주로 파일/URL 주소 등을 처리함).
+        console.log("이 개체 위에 무언가 올라옴");
+      });
+
+      dropZone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        const data = e.dataTransfer.getData("target"); // 타입: 글자
+        console.log("드롭 발생", data);
+
+        // DOM 트리 구조상, 멀티 parent를 가질 수 없음.. 그래서 appendChild 하면?? 인전에서 떨어짐.
+        // 글자를 가지고 알아서 안에 배치
+        // div 안에 div를 넣어라
+        // dropZone.appendChild(dragItem);
+        // 강제하고 있음. 잡은 것의 정보를 가져와서, drop시 알맞게.
+        // DOM을 넣어야 함.
+
+        const draggedElement = document.getElementById(data); // DOM을 가져옴
+        dropZone.appendChild(draggedElement);
+      });
+    </script>
+  </body>
+</html>

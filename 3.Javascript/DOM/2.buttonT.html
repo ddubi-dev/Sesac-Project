@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+      p {
+        color: red;
+      }
+    </style>
+    <script>
+      function changeColor() {
+        const mytext = document.getElementById("mytext");
+        //HTML DOM 요소만 가져옴, 여기에 적용된 CSS는 가져오지 못함. inline 속성만 가져올 수 있음(함수 특성)
+
+        const currentColor = mytext.style.color;
+        console.log(currentColor);
+
+        //HTML + CSS가 적용된 색상값을 가져오고 싶으면?
+        const currentColor2 = window.getComputedStyle(mytext).color;
+        // window, 합친 거를 렌더링(브라우저가 그림을 그림)
+        // 렌더링 - 실제로 화면에 나타내기 위한 계산 과정(바로 전부 불러오면 시간이 오래 걸림)
+        console.log(currentColor2);
+
+        if (currentColor2 == "rgb(255, 0, 0)") {
+          mytext.style.color = "blue";
+        } else {
+          mytext.style.color = "red";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <p id="mytext">이 텍스트의 글자를 변경해보시오</p>
+    <button onclick="changeColor()">텍스트 색상 토글</button>
+  </body>
+</html>

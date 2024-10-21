@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+      .modalcontainer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal {
+        background: white;
+        padding: 24px 16px;
+        border-radius: 4px;
+        width: 320px;
+      }
+
+      .modal-title {
+        font-size: 24px;
+        font-weight: bolder;
+      }
+
+      .modal p {
+        font-size: 16px;
+      }
+
+      .modal-close {
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>안녕하세요</h1>
+    <p>아무 내용이나 작성하시오</p>
+    <button id="open">모달 열기</button>
+
+    <div class="modalcontainer" style="display: none">
+      <div class="modal">
+        <div class="modal-title">안녕하세요</div>
+        <p>모달에 띄우고 싶은 내용</p>
+        <div class="modal-close">
+          <button id="close">닫기</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const open = document.getElementById("open");
+      const close = document.getElementById("close");
+      //   const close = document.querySelector("#close");
+
+      // test
+      //   const close = document.querySelectorAll(".modal-close");
+      console.log(close);
+
+      const modal = document.getElementsByClassName("modalcontainer")[0];
+      //   ==
+      //  const modal = document.querySelector('.modalcontainer');
+      // querySelector는 여러개 있더라도 무조건 첫번째것만 가져옴
+
+      open.onclick = function () {
+        modal.style.display = "flex";
+      };
+      close.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      //   close.onclick = () => {
+      //     modal.style.display = "none";
+      //   };
+    </script>
+  </body>
+</html>

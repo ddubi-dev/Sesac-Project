@@ -1,0 +1,87 @@
+<!-- 여러 아이템 drop -->
+<!-- T -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+      #dragItem1 {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        cursor: pointer;
+        margin: 10px;
+      }
+
+      #dragItem2 {
+        width: 100px;
+        height: 100px;
+        background-color: orange;
+        cursor: pointer;
+        margin: 10px;
+      }
+
+      #dragItem3 {
+        width: 100px;
+        height: 100px;
+        background-color: yellow;
+        cursor: pointer;
+        margin: 10px;
+      }
+
+      #dropZone {
+        width: 400px;
+        height: 400px;
+        margin-top: 50px;
+        border: 2px dashed gray;
+        background-color: lightgray;
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="dragItem1" draggable="true">Drag Me 1</div>
+    <div id="dragItem2" draggable="true">Drag Me 2</div>
+    <div id="dragItem3" draggable="true">Drag Me 3</div>
+    <div id="dropZone">Drop here</div>
+    <script>
+      const dragItem1 = document.getElementById("dragItem1");
+      const dragItem2 = document.getElementById("dragItem2");
+      const dragItem3 = document.getElementById("dragItem3");
+      const dropZone = document.getElementById("dropZone");
+
+      dragItem1.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("target", e.target.id);
+      });
+      dragItem2.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("target", e.target.id);
+      });
+      dragItem3.addEventListener("dragstart", (e) => {
+        e.dataTransfer.setData("target", e.target.id);
+      });
+
+      dropZone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        console.log("이 개체 위에 무언가 올라옴");
+      });
+
+      dropZone.addEventListener("drop", (e) => {
+        // 객체의 드롭X, dropzone에서 발생하는 마우스 자체의 drop.
+        // 아이디를 확인해서 그렇게 만들 수는 있음
+
+        e.preventDefault();
+        console.log("드롭 발생");
+        const data = e.dataTransfer.getData("target"); // 타입: 글자
+        const draggedElement = document.getElementById(data); // DOM을 가져옴
+        dropZone.appendChild(draggedElement);
+      });
+    </script>
+  </body>
+</html>
+
+<!-- 어려운 방식
+      내가 무엇을 잡았는지(drop) 기록
+      drop할 때 그 기록을 참조해서
+      appendChild 해야함 -->

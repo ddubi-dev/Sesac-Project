@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="myButton">클릭 미</button>
+    <script>
+      //   function myButtonAction() {
+      //     console.log('버튼 클릭됨');
+      //   }
+      //   const button = document.getElementById('myButton');
+      //   button.addEventListener('click', myButtonAction);
+
+      //   const button = document.getElementById("myButton");
+      //   button.addEventListener("click", () => {
+      //     console.log("버튼 클릭됨");
+      //   });
+
+      document.getElementById("myButton").addEventListener("click", () => {
+        console.log("버튼 클릭됨");
+      });
+    </script>
+
+    <!--DOMContentLoaded 을 왜 쓰는가??? -->
+    <!-- <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const button = document.getElementById('myButton');
+        console.log(button);
+      });
+    </script>
+    <button id='myButton'>클릭 미</button> -->
+  </body>
+</html>

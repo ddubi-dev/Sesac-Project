@@ -1,0 +1,27 @@
+.dragItems {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+#dragItem1 {
+  background-color: red;
+}
+
+#dragItem2 {
+  background-color: orange;
+}
+
+#dragItem3 {
+  background-color: yellow;
+}
+
+#dropZone {
+  width: 200px;
+  min-height: 200px;
+  margin-top: 50px;
+  border: 2px dashed gray;
+  background-color: lightgray;
+  /* display: flex; */
+}

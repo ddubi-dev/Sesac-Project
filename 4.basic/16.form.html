@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form id="myForm">
+      <input id="text" type="text" name="name" placeholder="이름을..." />
+      <button type="submit">제출</button>
+      <button type="reset">초기화</button>
+    </form>
+    <script>
+      document.getElementById("myForm").addEventListener("submit", (e) => {
+        e.preventDefault(); // 폼의 기본 기능을 하지 않음(제출 안함)
+        console.log("폼 제출 중지했음");
+        // ajax -> 백 그라운드에서 전송할 예정
+      });
+
+      document.getElementById("myForm").addEventListener("reset", (e) => {
+        e.preventDefault();
+        console.log("폼 초기화 중지했음");
+        const text = document.getElementById("text");
+        text.value = "지울 수 없다!";
+      });
+    </script>
+  </body>
+</html>

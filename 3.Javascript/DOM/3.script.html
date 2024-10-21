@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <script>
+      const param = document.getElementById("mytext");
+      //변수 자체가 null
+      param.textContent = "헬로우 JS";
+      //(null).textContent를 할 수 없다 -> 순서가 중요하다
+      console.log("hello");
+    </script>
+  </head>
+  <body>
+    <h1>헬로우 월드,JS</h1>
+    <p id="mytext">여기는 패러그래프가 있는 곳</p>
+  </body>
+</html>
