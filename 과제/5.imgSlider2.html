@@ -24,7 +24,10 @@
         display: flex;
         overflow: hidden;
 
-        /* transition: transform 0.5s ease-in-out; */
+        transition: transform 0.5s ease-in-out;
+      }
+
+      #Next {
       }
 
       img {
@@ -38,11 +41,10 @@
         justify-content: space-between;
         width: 400px;
         position: absolute;
-        /* 문서 흐름을 제거하고, 
+        top: 200px;
+        /* 문서 흐름을 제거하고,
         가장 가까운 위치 지정된 조상요소를 기준으로
         해당 요소의 위치를 직접 제어 가능  */
-
-        top: 200px;
       }
 
       button {
@@ -66,45 +68,26 @@
         <button id="Next">Next</button>
       </div>
     </div>
-
     <script>
-      let num = 0;
-      document.getElementById("Next").addEventListener("click", () => {
-        if (num == 2) {
-        } else {
-          num++;
-        }
-      });
-    </script>
-    <!-- <script>
-      let num = 0;
-      document.getElementById("Previous").addEventListener("click", () => {
-        if (num == 0) {
-          document.getElementById("space").innerHTML = '<img src="cat3.jpg">';
-        } else if (num == 1) {
-          document.getElementById("space").innerHTML = '<img src="cat1.jpg">';
-        } else if (num == 2) {
-          document.getElementById("space").innerHTML = '<img src="cat2.jpg">';
-        }
-        num--;
-        if (num == -1) {
-          num = 2;
-        }
-      });
+      let slide = 0;
 
-      document.getElementById("Next").addEventListener("click", () => {
-        if (num == 0) {
-          document.getElementById("space").innerHTML = '<img src="cat2.jpg">';
-        } else if (num == 1) {
-          document.getElementById("space").innerHTML = '<img src="cat3.jpg">';
-        } else if (num == 2) {
-          document.getElementById("space").innerHTML = '<img src="cat1.jpg">';
+      function moveL(direction) {
+        const slides = document.getElementById("space");
+        const totalSlides = slides.length;
+
+        if (direction == "Next") {
+          if (slide < 3) {
+            slide++;
+          }
+
+          const slideWidth = document.getElementById("space").clientWidth;
+          slides.style.transfrom = `translateX(-${slideWidth * slide}px)`;
+        } else if (direction == "Previous") {
+          if (slide > 0) {
+            slide--;
+          }
         }
-        num++;
-        if (num == 3) {
-          num = 0;
-        }
-      });
-    </script> -->
+      }
+    </script>
   </body>
 </html>
