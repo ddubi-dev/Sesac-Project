@@ -81,13 +81,15 @@
           }
 
           const slideWidth = document.getElementById("space").clientWidth;
-          slides.style.transfrom = `translateX(-${slideWidth * slide}px)`;
+          slides.style.transform = `translateX(-${slideWidth * slide}px)`;
         } else if (direction == "Previous") {
           if (slide > 0) {
             slide--;
           }
         }
       }
+
+      document.getElementById("Next").addEventListener("click", () => {});
     </script>
   </body>
 </html>
