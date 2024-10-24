@@ -1,0 +1,9 @@
+# node 모듈 전체 제외
+node_modules/
+
+
+# 개발하면서 생겨나는 각종 중간 산출물 제외
+*.txt
+
+!ascii.txt
+# 얘는 제외
