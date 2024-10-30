@@ -1,13 +1,21 @@
-async function example() {
-  console.log("첫 번째 출력"); // 동기적으로 실행됨
+let coffee = ["Americano", "Latte", "Cappuccino", "Espresso", "Mocha"];
 
-  await new Promise((resolve) => setTimeout(resolve, 10000)); // 비동기 코드로, 여기서 1초 대기
+let juice = [
+  "Watermelon Juice",
+  "Orange Juice",
+  "Apple Juice",
+  "Pineapple Juice",
+  "Grape Juice",
+];
 
-  console.log("두 번째 출력"); // 대기가 끝난 후 실행됨
+let cake = [
+  "Strawberry Cake",
+  "Chocolate Cake",
+  "Cheesecake",
+  "Red Velvet Cake",
+  "Lemon Cake",
+];
 
-  await new Promise((resolve) => setTimeout(resolve, 10000)); // 다시 1초 대기
+let menu = [coffee, juice, cake];
 
-  console.log("세 번째 출력"); // 두 번째 대기가 끝난 후 실행됨
-}
-
-example();
+console.log(menu[1][3]);

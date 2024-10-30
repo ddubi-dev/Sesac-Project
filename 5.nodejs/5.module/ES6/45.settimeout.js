@@ -1,9 +1,36 @@
-console.log("1. 타이머를 통한 비동기처리"); // 1
+console.log("1. 타이머를 통한 비동기처리");
 
-setTimeout(() => console.log("2. 2초뒤 안녕하세요."), 2000); // 4
-setTimeout(() => console.log("3. 1초뒤 안녕하세요."), 1000); // 3
+function setTimeoutSync(message, delay) {
+  return new Promise((resolve) => {
+    //  지연 처리할 작업을 담아놓는 공간
+    setTimeout(() => {
+      console.log(message);
+      resolve();
+    }, delay);
+  });
+}
 
-console.log("4. 모든 작업이 완료되었습니다."); // 2
+// const result = setTimeoutSync("(1. 첫번째 작업: 1초 후 실행", 1000);
+// console.log(result); // 대기 pending, 이행 fulfilled(성공 완료), 거부 rejected(실패 완료)
 
-// 비동기 작업은 일을 시키기만하고 넘어감.
-// 결과와 상관없이 다음 코드 실행
+// setTimeoutSync("(1. 첫번째 작업: 1초 후 실행", 1000); 1초 후
+// setTimeoutSync("(2. 두번째 작업: 2초 후 실행", 2000); 2초 후
+// setTimeoutSync("(3. 세번째 작업: 3초 후 실행", 3000); 3초 후
+
+// Promise
+setTimeoutPromise("1. 첫번째 작업: 1초 후 실행", 1000) // 1초 후
+  .then(() => setTimeoutPromise("2. 두번째 작업: 2초 후 실행", 2000)) // 3초 후
+  .then(() => setTimeoutPromise("3. 세번째 작업: 3초 후 실행", 3000)) // 6초 후
+  .then(() => {
+    console.log("4. 모든 작업이 완료되었습니다.");
+  });
+
+// async, await
+async function executeTask() {
+  await setTimeoutSync("1. 첫번째 작업: 1초 후 실행", 1000);
+  await setTimeoutSync("2. 두번째 작업: 2초 후 실행", 2000);
+  await setTimeoutSync("3. 세번째 작업: 3초 후 실행", 3000);
+  console.log("4. 작업이 완료되었습니다.");
+}
+
+executeTask();
