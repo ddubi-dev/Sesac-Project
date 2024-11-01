@@ -1,7 +1,8 @@
-const fs = require("fs");
-const Papa = require("papaparse");
+// const fs = require("fs");
+// const Papa = require("papaparse");
+import Papa from "papaparse";
+import fs from "fs";
 
-// class 별 파일 분리
 class MyUtility {
   static randomNumber(arg) {
     return Math.floor(Math.random() * arg);
@@ -407,11 +408,10 @@ class UserGenerator {
 }
 
 const userGenerator = new UserGenerator();
-const users = userGenerator.generateData(20);
+const users = userGenerator.generateData(10); // 1000
 
 const dataPrinter = new DataPrinter(users);
-// dataPrinter.printConsole();
-const filePath = "user.csv";
+const filePath = "results/user.csv";
 dataPrinter.writeUserToCSV(filePath);
 
 //----------------generate store--------------------
@@ -491,10 +491,10 @@ class StoreGenerator {
 }
 
 const storeGenerator = new StoreGenerator();
-const cafes = storeGenerator.generateData(20);
+const stores = storeGenerator.generateData(10); // 100
 
-const dataPrinter2 = new DataPrinter(cafes);
-const filePath2 = "store.csv";
+const dataPrinter2 = new DataPrinter(stores);
+const filePath2 = "results/store.csv";
 dataPrinter2.writeStoreToCSV(filePath2);
 
 //----------------generate order--------------------
@@ -502,8 +502,8 @@ class OrderGenerator {
   constructor() {
     this.idGen = new UUIDGenerator();
     this.orderAtGen = new TimeStampGenerator(2024, 9, 2024, 10);
-    this.storeIdGen = new SelectID("store.csv");
-    this.userIdGen = new SelectID("user.csv");
+    this.storeIdGen = new SelectID("results/store.csv");
+    this.userIdGen = new SelectID("results/user.csv");
   }
 
   generateData(count) {
@@ -601,9 +601,9 @@ class SelectID {
 
 const order = new OrderGenerator();
 
-const dataPrinter3 = new DataPrinter(order.generateData(10));
-
-dataPrinter3.writeOrderToCSV("order.csv");
+const dataPrinter3 = new DataPrinter(order.generateData(10)); // 100000
+const filePath3 = "results/order.csv";
+dataPrinter3.writeOrderToCSV(filePath3);
 
 //----------------generate item--------------------
 
@@ -675,17 +675,16 @@ class MenuGenerator {
 }
 
 const item = new ItemGenerator();
-const dataPrinter4 = new DataPrinter(item.generateData(20));
-
-dataPrinter4.writeItemToCSV("item.csv");
+const dataPrinter4 = new DataPrinter(item.generateData(20)); // 20
+dataPrinter4.writeItemToCSV("results/item.csv");
 
 //----------------generate orderItem--------------------
 
 class OrderItemGenerator {
   constructor() {
     this.idGen = new UUIDGenerator();
-    this.orderIdGen = new SelectID("order.csv");
-    this.itemIdGen = new SelectID("item.csv");
+    this.orderIdGen = new SelectID("results/order.csv");
+    this.itemIdGen = new SelectID("results/item.csv");
   }
 
   generateData(count) {
@@ -696,14 +695,12 @@ class OrderItemGenerator {
       let itemId = this.itemIdGen.selectID("Id");
 
       data.push([id, orderId, itemId]);
-
-      console.log(`id: ${id}, orderId: ${orderId}, itemId: ${itemId}`);
     }
     return data;
   }
 }
 
 const orderItem = new OrderItemGenerator();
-const dataPrinter5 = new DataPrinter(orderItem.generateData(10));
+const dataPrinter5 = new DataPrinter(orderItem.generateData(10)); // 50000
 
-dataPrinter5.writeOrderItemToCSV("orderitem.csv");
+dataPrinter5.writeOrderItemToCSV("results/orderitem.csv");
