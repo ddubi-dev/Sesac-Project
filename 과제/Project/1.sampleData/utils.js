@@ -46,14 +46,38 @@ export class DataPrinter {
     }
   }
 
-  printHTML() {}
+  // printHTML() {}
+
+  // writeUserToCSV(filePath) {
+  //   const header = ["Id", "Name", "Gender", "Age", "Birthdate", "Address"];
+  //   const rows = this.data.map((row) => row.join(",")); // ,으로 join 된 str을 반환
+  //   const csvContent = [header, ...rows].join("\n");
+
+  //   fs.writeFileSync(filePath, csvContent, "utf-8");
+  // }
 
   writeUserToCSV(filePath) {
     const header = ["Id", "Name", "Gender", "Age", "Birthdate", "Address"];
     const rows = this.data.map((row) => row.join(",")); // ,으로 join 된 str을 반환
     const csvContent = [header, ...rows].join("\n");
 
+    // 인덱스 파일 생성
+    const indexFilePath = "./results/1.generateUsers_index.csv";
+    let indexList = [];
+    let currentPosition = 0;
+
+    rows.forEach((row) => {
+      if (currentPosition == 0) {
+        currentPosition = Buffer.byteLength(header.join(","), "utf8") + 1;
+      }
+      indexList.push(currentPosition);
+      currentPosition += Buffer.byteLength(row, "utf8") + 1;
+    });
+
+    const indexContent = indexList.join("\n");
+
     fs.writeFileSync(filePath, csvContent, "utf-8");
+    fs.writeFileSync(indexFilePath, indexContent, "utf-8");
   }
 
   writeStoreToCSV(filePath) {

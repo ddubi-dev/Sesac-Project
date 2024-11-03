@@ -36,31 +36,100 @@ class TimeStampGenerator {
   }
 }
 
+// export class SelectID {
+//   constructor(file) {
+//     this.file = fs.readFileSync(file, "utf-8");
+//   }
+
+//   selectID() {
+//     let columnData;
+
+//     Papa.parse(this.file, {
+//       header: true,
+//       complete: (result) => {
+//         const columnName = "Id";
+//         columnData = result.data.map((row) => row[columnName]);
+//       },
+//     });
+
+//     return `${columnData[MyUtility.getRandomNumber(columnData.length)]}`;
+//   }
+// }
 export class SelectID {
-  constructor(file) {
-    this.file = fs.readFileSync(file, "utf-8");
+  constructor(filePath, indexFilePath) {
+    this.filePath = filePath;
+    // this.file = fs.readFileSync(filePath, "utf-8");
+    this.indexFile = fs.readFileSync(indexFilePath, "utf-8");
   }
 
   selectID() {
-    let columnData;
+    function getHeader(path) {
+      return new Promise((resolve, reject) => {
+        const headerStream = fs.createReadStream(path, {
+          encoding: "utf8",
+        });
 
-    Papa.parse(this.file, {
-      header: true,
-      complete: (result) => {
-        const columnName = "Id";
-        columnData = result.data.map((row) => row[columnName]);
-      },
-    });
+        let header = [];
 
-    return `${columnData[MyUtility.getRandomNumber(columnData.length)]}`;
+        headerStream.on("data", (row) => {
+          header = row.split(",");
+          headerStream.destroy();
+          resolve(header);
+        });
+
+        headerStream.on("error", (error) => {
+          reject(error);
+        });
+      });
+    }
+
+    const indexList = this.indexFile.trim().split("\n");
+
+    let randomIndex = indexList[MyUtility.getRandomNumber(indexList.length)];
+
+    async function getValue(filePath, randomIndex) {
+      const header = await getHeader(filePath);
+
+      return new Promise((resolve, reject) => {
+        // 해당 위치로 이동
+        const stream = fs.createReadStream(filePath, {
+          start: parseInt(randomIndex, 10),
+        });
+        let recordData = "";
+        let columnData = "";
+
+        stream.on("data", (row) => {
+          recordData = row.toString();
+
+          Papa.parse(recordData, {
+            header: false,
+            complete: (result) => {
+              const row = result.data[0];
+
+              const columnName = "Id";
+              columnData = row[header.indexOf(columnName)];
+
+              resolve(columnData);
+
+              // console.log(`columnData: ${columnData}`);
+            },
+          });
+        });
+      });
+    }
+
+    const columnData = getValue(this.filePath, randomIndex);
+    console.log(`columnData: ${columnData}`);
   }
 }
-
 export class OrderGenerator {
   constructor() {
     this.orderAtGen = new TimeStampGenerator(2024, 9, 2024, 10);
-    this.storeIdGen = new SelectID("results/store.csv");
-    this.userIdGen = new SelectID("results/user.csv");
+    // this.storeIdGen = new SelectID("results/store.csv");
+    this.userIdGen = new SelectID(
+      "results/user.csv",
+      "results/1.generateUsers_index.csv"
+    );
   }
 
   generateData(count) {
@@ -68,10 +137,10 @@ export class OrderGenerator {
     for (let i = 0; i < count; i++) {
       this.uuid = UUIDGenerator.generateUUID();
       let orderAt = this.orderAtGen.generateTimeStamp();
-      let storeId = this.storeIdGen.selectID();
+      // let storeId = this.storeIdGen.selectID();
       let userId = this.userIdGen.selectID();
 
-      data.push([this.uuid, orderAt, storeId, userId]);
+      // data.push([this.uuid, orderAt, storeId, userId]);
     }
     return data;
   }

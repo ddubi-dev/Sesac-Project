@@ -27,16 +27,16 @@ const dataPrinter3 = new DataPrinter(order.generateData(10)); // 100000
 
 dataPrinter3.writeOrderToCSV("results/order.csv");
 
-//----------------generate item--------------------
+// //----------------generate item--------------------
 
-const item = new ItemGenerator();
-const dataPrinter4 = new DataPrinter(item.generateData(20)); // 20
+// const item = new ItemGenerator();
+// const dataPrinter4 = new DataPrinter(item.generateData(20)); // 20
 
-dataPrinter4.writeItemToCSV("results/item.csv");
+// dataPrinter4.writeItemToCSV("results/item.csv");
 
-//----------------generate orderItem--------------------
+// //----------------generate orderItem--------------------
 
-const orderItem = new OrderItemGenerator();
-const dataPrinter5 = new DataPrinter(orderItem.generateData(10)); // 50000
+// const orderItem = new OrderItemGenerator();
+// const dataPrinter5 = new DataPrinter(orderItem.generateData(10)); // 50000
 
-dataPrinter5.writeOrderItemToCSV("results/orderitem.csv");
+// dataPrinter5.writeOrderItemToCSV("results/orderitem.csv");
