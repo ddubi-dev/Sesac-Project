@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>To-Do List</title>
+    <style>
+      #inputAndButton {
+        display: flex;
+      }
+      input {
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>To-Do List</h1>
+    <div id="inputAndButton">
+      <input id="textInput" type="text" placeholder="New to-do" />
+      <button id="addButton">Add</button>
+    </div>
+    <div>
+      <ul id="list"></ul>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const button = document.getElementById("addButton");
+        button.addEventListener("click", addList);
+
+        function addList() {
+          const input = document.getElementById("textInput").value;
+          const list = document.getElementById("list");
+
+          const listItem = document.createElement("li");
+          listItem.textContent = `${input}`;
+          list.appendChild(listItem);
+          document.getElementById("textInput").value = ""; // input 초기화
+
+          for (let i = 0; i < list.children.length; i++) {
+            list.children[i].addEventListener("click", () => {
+              list.children[i].style.textDecoration = "line-through";
+            });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
