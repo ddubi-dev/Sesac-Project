@@ -1,6 +1,5 @@
-import { MyUtility } from "../utils.js";
-import { UUIDGenerator } from "../utils.js";
-import { AddressGenerator } from "./1.generateUsers.js";
+import { MyUtility, UUIDGenerator } from "../utils.js";
+import { AddressGenerator } from "./generateUsers.js";
 
 class StoreNameGenerator {
   constructor() {

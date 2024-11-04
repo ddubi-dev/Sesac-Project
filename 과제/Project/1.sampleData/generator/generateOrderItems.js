@@ -1,4 +1,4 @@
-import { SelectID } from "./3.generateOrders.js";
+import { SelectID } from "./generateOrders.js";
 import { UUIDGenerator } from "../utils.js";
 
 export class OrderItemGenerator {

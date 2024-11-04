@@ -1,4 +1,4 @@
-import { TypeGenerator } from "./2.generateStores.js";
+import { TypeGenerator } from "./generateStores.js";
 import { UUIDGenerator } from "../utils.js";
 import { MyUtility } from "../utils.js";
 

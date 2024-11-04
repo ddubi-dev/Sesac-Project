@@ -1,8 +1,7 @@
 import fs from "fs";
 import Papa from "papaparse";
-import { MyUtility } from "../utils.js";
-import { UUIDGenerator } from "../utils.js";
-import { BirthGenerator } from "../generator/1.generateUsers.js";
+import { MyUtility, UUIDGenerator } from "../utils.js";
+import { BirthGenerator } from "../generator/generateUsers.js";
 
 class TimeStampGenerator {
   constructor(year1, month1, year2, month2) {

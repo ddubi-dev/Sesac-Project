@@ -1,8 +1,8 @@
-import { UserGenerator } from "./generator/1.generateUsers.js";
-import { StoreGenerator } from "./generator/2.generateStores.js";
-import { OrderGenerator } from "./generator/3.generateOrders.js";
-import { ItemGenerator } from "./generator/4.generateProducts.js";
-import { OrderItemGenerator } from "./generator/5.generateOrderItems.js";
+import { UserGenerator } from "./generator/generateUsers.js";
+import { StoreGenerator } from "./generator/generateStores.js";
+import { OrderGenerator } from "./generator/generateOrders.js";
+import { ItemGenerator } from "./generator/generateProducts.js";
+import { OrderItemGenerator } from "./generator/generateOrderItems.js";
 import { DataPrinter } from "./utils.js";
 
 //generate user
