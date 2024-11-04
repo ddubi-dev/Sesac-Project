@@ -6,14 +6,14 @@ import { ItemGenerator } from "./generator/4.generateProducts.js";
 import { OrderItemGenerator } from "./generator/5.generateOrderItems.js";
 import { DataPrinter } from "./utils.js";
 
-//----------------generate users--------------------
+//generate users
 const userGenerator = new UserGenerator();
 const users = userGenerator.generateData(1000); // 1000
 
 const dataPrinter = new DataPrinter(users);
 dataPrinter.writeUserToCSV("results/user.csv");
 
-//----------------generate stores--------------------
+//generate stores
 
 const storeGenerator = new StoreGenerator();
 const stores = storeGenerator.generateData(100); // 100
@@ -21,20 +21,20 @@ const stores = storeGenerator.generateData(100); // 100
 const dataPrinter2 = new DataPrinter(stores);
 dataPrinter2.writeStoreToCSV("results/store.csv");
 
-//----------------generate order--------------------
+//generate order
 const order = new OrderGenerator();
 const dataPrinter3 = new DataPrinter(order.generateData(10000)); // 10000
 
 dataPrinter3.writeOrderToCSV("results/order.csv");
 
-//----------------generate item--------------------
+//generate item
 
 const item = new ItemGenerator();
 const dataPrinter4 = new DataPrinter(item.generateData(20)); // 20
 
 dataPrinter4.writeItemToCSV("results/item.csv");
 
-//----------------generate orderItem--------------------
+//generate orderItem
 
 const orderItem = new OrderItemGenerator();
 const dataPrinter5 = new DataPrinter(orderItem.generateData(50000)); // 50000

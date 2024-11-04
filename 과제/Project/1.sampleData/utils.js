@@ -36,7 +36,6 @@ export class UUIDGenerator {
 
 export class DataPrinter {
   constructor(data) {
-    // 의존성 삽입
     this.data = data;
   }
 

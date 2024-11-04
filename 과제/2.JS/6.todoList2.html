@@ -10,6 +10,10 @@
       input {
         margin-right: 5px;
       }
+
+      ul {
+        list-style-type: none;
+      }
     </style>
   </head>
   <body>
@@ -26,21 +30,71 @@
       document.addEventListener("DOMContentLoaded", () => {
         const button = document.getElementById("addButton");
         button.addEventListener("click", addList);
+        let listCheck = [];
 
         function addList() {
           const input = document.getElementById("textInput").value;
+          if (input == "") {
+            return;
+          }
           const list = document.getElementById("list");
 
           const listItem = document.createElement("li");
-          listItem.textContent = `${input}`;
-          list.appendChild(listItem);
-          document.getElementById("textInput").value = ""; // input 초기화
+          const label = document.createElement("label");
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          const cancelImg = Object.assign(document.createElement("img"), {
+            src: "cancel.png",
+            width: 15,
+            style: "margin-left: 5px;",
+          });
+          //   const cancelImg = document.createElement("img");
+          //   cancelImg.src = "cancel.png";
+          //   cancelImg.width = 14;
+          //   cancelImg.style.marginLeft = "5px";
 
-          for (let i = 0; i < list.children.length; i++) {
-            list.children[i].addEventListener("click", () => {
-              list.children[i].style.textDecoration = "line-through";
-            });
-          }
+          label.appendChild(checkbox);
+          label.appendChild(document.createTextNode(input));
+          label.appendChild(cancelImg);
+          listItem.appendChild(label);
+
+          list.appendChild(listItem);
+          listCheck.push(0);
+
+          document.getElementById("textInput").value = "";
+
+          cancelImg.addEventListener("click", () => {
+            listItem.remove();
+          });
+
+          checkbox.addEventListener("change", () => {
+            // const currentIndex = list.children.length - 1;
+            if (checkbox.checked) {
+              listItem.style.textDecoration = "line-through";
+              //   listCheck[currentIndex] = 1;
+            } else {
+              listItem.style.textDecoration = "none";
+              //   listCheck[currentIndex] = 1;
+            }
+          });
+
+          //   listItem.addEventListener("click", () => {
+          //     if (listCheck == 0) {
+          //       listCheck = 1;
+          //       list.children.style.textDecoration = "line-through";
+          //     } else {
+          //       listCheck = 0;
+          //       list.children.style.textDecoration = "none";
+          //     }
+          //   });
+
+          //   for (let i = 0; i < list.children.length; i++) {
+          //     list.children[i]
+          //       .getElementsByTagName("img")[0]
+          //       .addEventListener("click", () => {
+          //         list.children[i].remove();
+          //       });
+          //   }
         }
       });
     </script>

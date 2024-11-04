@@ -61,20 +61,6 @@ export class SelectID {
       this.columnData[MyUtility.getRandomNumber(this.columnData.length)]
     }`;
   }
-
-  // selectID() {
-  //   let columnData;
-
-  //   Papa.parse(this.file, {
-  //     header: true,
-  //     complete: (result) => {
-  //       const columnName = "Id";
-  //       columnData = result.data.map((row) => row[columnName]);
-  //     },
-  //   });
-
-  //   return `${columnData[MyUtility.getRandomNumber(columnData.length)]}`;
-  // }
 }
 
 export class OrderGenerator {
