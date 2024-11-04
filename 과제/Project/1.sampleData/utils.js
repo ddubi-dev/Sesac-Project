@@ -1,4 +1,3 @@
-// 유틸리티 함수
 import fs from "fs";
 
 export class MyUtility {
