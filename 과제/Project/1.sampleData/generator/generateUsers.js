@@ -100,10 +100,7 @@ class NameGenerator {
   }
 
   generateName() {
-    return (
-      this.lastNames[MyUtility.getRandomNumber(this.lastNames.length)] +
-      this.firstNames[MyUtility.getRandomNumber(this.firstNames.length)]
-    );
+    return this.lastNames[MyUtility.getRandomNumber(this.lastNames.length)] + this.firstNames[MyUtility.getRandomNumber(this.firstNames.length)];
   }
 }
 
@@ -124,15 +121,7 @@ export class BirthGenerator {
     let date;
     if (num == 2) {
       date = MyUtility.getRandomInRange(1, 28);
-    } else if (
-      num == 1 ||
-      num == 3 ||
-      num == 5 ||
-      num == 7 ||
-      num == 8 ||
-      num == 10 ||
-      num == 12
-    ) {
+    } else if (num == 1 || num == 3 || num == 5 || num == 7 || num == 8 || num == 10 || num == 12) {
       date = MyUtility.getRandomInRange(1, 31);
     } else {
       date = MyUtility.getRandomInRange(1, 30);
@@ -161,10 +150,7 @@ class AgeGenerator {
     let thisMonth = parseInt(today.getMonth()) + 1;
     let thisDate = parseInt(today.getDate());
 
-    if (
-      (thisMonth == birthDate.month && thisDate <= birthDate.date) ||
-      thisMonth > birthDate.month
-    ) {
+    if ((thisMonth == birthDate.month && thisDate <= birthDate.date) || thisMonth > birthDate.month) {
       this.age = thisYear - birthDate.year;
     } else {
       this.age = thisYear - birthDate.year - 1;
@@ -255,12 +241,9 @@ export class AddressGenerator {
 
   generateAddress() {
     let city = this.cities[MyUtility.getRandomNumber(this.cities.length)];
-    let district =
-      this.districts[MyUtility.getRandomNumber(this.districts.length)];
-    return `${city} ${district} ${MyUtility.getRandomInRange(
-      1,
-      200
-    )}길 ${MyUtility.getRandomInRange(1, 200)}`;
+    let district = this.districts[MyUtility.getRandomNumber(this.districts.length)];
+    let address = `${city} ${district} ${MyUtility.getRandomInRange(1, 200)}길 ${MyUtility.getRandomInRange(1, 200)}`;
+    return address;
   }
 }
 
