@@ -6,7 +6,7 @@ const { parse } = require("querystring");
 const users = {};
 
 const server = http.createServer((req, res) => {
-  console.log(req.method, req.url);
+  // console.log(req.method, req.url);
 
   if (req.method === "GET") {
     handleGetRequest(req, res);
@@ -32,14 +32,14 @@ async function handleGetRequest(req, res) {
   try {
     if (req.url === "/") {
       const data = await fs.readFile("./index.html");
-      res.end("GET요청 / 응답완료");
+      res.end(data);
     } else if (req.url === "/about") {
-      res.end("GET요청 /about 응답완료");
+      const data = await fs.readFile("./about.html");
+      res.end(data);
     } else if (req.url === "/user") {
       res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
       //   console.log(users); -- 메모리 안의 객체 형태(자료구조)이기 때문에 값을 넘길 수 없음
       res.end(JSON.stringify(users)); // 문자 형태로 변환함
-      res.end("GET요청 /user 응답완료");
     } else {
       res.writeHead(404);
       res.end("Not Found");
@@ -76,6 +76,7 @@ function handlePostRequest(req, res) {
         return res.end("모르는 타입임");
       }
     });
+  } else {
   }
 }
 

@@ -33,7 +33,7 @@ http
 
           // 4. 그 내용을 전달
           const imageData = await fs.readFile(imagePath);
-          res.writeHead(404, { "Content-Type": "image/jpg" }); // rfc에 정의 되어있음.
+          res.writeHead(200, { "Content-Type": "image/jpg" }); // rfc에 정의 되어있음.
 
           res.end(imageData);
         } else {

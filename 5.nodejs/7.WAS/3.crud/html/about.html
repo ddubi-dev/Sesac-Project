@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>about page</title>
+  </head>
+  <body>
+    <h1>About Me!</h1>
+    <p>This is node server!</p>
+    <img src="" alt="" id="catImg" />
+  </body>
+
+  <script>
+    fetch("/about", {
+      method: "GET",
+      header: { "ConTent-Type": "image/jpg" },
+    }).then((response) => {
+      if (response.ok) {
+        const img = document.getElementById("catImg");
+        // const img = document.createElement("img");
+        img.src = "../static/cat1.jpg"; // ??? GET http://localhost:3000/static/cat1.jpg
+        img.alt = "cat-img";
+
+        // document.appendChild;
+      } else {
+        // 오류처리
+      }
+      console.log(response);
+    });
+    //   .then((data) => {
+    //     console.log(data);
+    //     // document.getElementById("content").innerHTML = data.html;
+
+    //     // const img = document.createElement("img");
+    //     // img.src = data.imgUrl;
+    //     // img.alt = "cat-image";
+    //     // document.getElementById("content").appendChild(img);
+    //   });
+  </script>
+</html>
