@@ -9,8 +9,8 @@ const server = http.createServer((req, res) => {
     handleGetRequest(req, res);
   } else if (req.method === "POST") {
     handlePostRequest(req, res);
-  } else if (req.method === "PATCH") {
-    handlePatchRequest(req, res);
+  } else if (req.method === "PUT") {
+    handlePutRequest(req, res);
   } else if (req.method === "DELETE") {
     handleDeleteRequest(req, res);
   } else {
@@ -28,17 +28,18 @@ async function handleGetRequest(req, res) {
   try {
     if (req.url === "/") {
       // 기본 화면 요청
-      const data = await fs.readFile("./html/index.html");
+      const data = await fs.readFile("./index.html");
       res.end(data); // 프론트로 전달
     } else if (req.url === "/about") {
       // about 화면 요청
-      const data = await fs.readFile("./html/about.html");
+      const data = await fs.readFile("./about.html");
       res.end(data);
     } else if (req.url === "/user") {
       // user 데이터 요청
       res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
       res.end(JSON.stringify(user));
     } else if (req.url === "/static/cat1.jpg") {
+      // cat
       const imgName = path.basename(req.url);
       const imgPath = path.join("static", imgName);
       const imgData = await fs.readFile(imgPath);
@@ -87,5 +88,37 @@ function handlePostRequest(req, res) {
     res.end("알 수 없는 오류 발생");
   }
 }
-function handlePatchRequest(req, res) {}
-function handleDeleteRequest(req, res) {}
+function handlePutRequest(req, res) {
+  if (req.url.startsWith("/user/")) {
+    let body = "";
+
+    req.on("data", (chunk) => {
+      body += chunk;
+    });
+
+    req.on("end", () => {
+      const userId = path.basename(req.url);
+      user[userId] = body;
+      res.writeHead(200, { "Content-Type": "text/plain" });
+      res.end(`change the value of ${userId} to ${body}`);
+    });
+  } else {
+    res.writeHead(404);
+    res.end("Not Found");
+  }
+}
+function handleDeleteRequest(req, res) {
+  if (req.url.startsWith("/user/")) {
+    const userId = path.basename(req.url);
+    if (userId in user) {
+      delete user[userId];
+      res.end(`${userId} 삭제 성공`);
+    } else {
+      res.writeHead(404);
+      res.end(`${userId} 는 사용자 목록에 없습니다.`);
+    }
+  } else {
+    res.writeHead(404);
+    res.end("Not Found");
+  }
+}

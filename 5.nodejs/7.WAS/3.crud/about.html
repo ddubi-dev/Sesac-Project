@@ -3,14 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <title>about page</title>
+    <style>
+      img {
+        width: 500px;
+      }
+    </style>
   </head>
   <body>
-    <h1>About Me!</h1>
-    <p>This is node server!</p>
-    <img src="" alt="" id="catImg" />
+    <nav>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/user">User</a>
+    </nav>
+
+    <section>
+      <h1>About Me!</h1>
+      <p>This is node server!</p>
+      <img src="./static/cat1.jpg" alt="cat-image" />
+    </section>
   </body>
 
-  <script>
+  <!-- <script>
     fetch("/about", {
       method: "GET",
       header: { "ConTent-Type": "image/jpg" },
@@ -36,5 +49,5 @@
     //     // img.alt = "cat-image";
     //     // document.getElementById("content").appendChild(img);
     //   });
-  </script>
+  </script> -->
 </html>
