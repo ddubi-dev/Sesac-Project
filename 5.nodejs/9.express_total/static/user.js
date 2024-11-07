@@ -41,13 +41,10 @@ function registerUser(name) {
 }
 
 function updateUsers() {
-  // fetch("/user").then((response) => {
-  //   return response.json(); // 리턴 값 promise
-  // });
-
   const userTable = document.getElementById("userTable");
   userTable.innerHTML = ``;
 
+  // GET /user
   fetch("/user")
     .then((response) => response.json())
     .then((users) => {
@@ -66,15 +63,15 @@ function updateUsers() {
 
           const modifyButton = document.createElement("button");
           modifyButton.textContent = "수정";
+          modifyButton.addEventListener("click", () => {
+            modifyUsers(key);
+          });
           row.appendChild(modifyButton);
 
           const deleteButton = document.createElement("button");
           deleteButton.textContent = "삭제";
           deleteButton.addEventListener("click", () => {
-            deleteUser(key);
-            updateUsers();
-            // 더 부드럽게 하려면 해당 돔만 찾아서 삭제...!
-            // 현재의 방법은 -> user에서 지워주고 화면을 다시 부름 updateUsers()
+            deleteUsers(key);
           });
           row.appendChild(deleteButton);
 
@@ -84,13 +81,14 @@ function updateUsers() {
     });
 }
 
-function deleteUser(userId) {
+function deleteUsers(userId) {
   fetch(`/user/${userId}`, {
     method: "DELETE",
   })
     .then((response) => {
       if (response.ok) {
         // alert("삭제 성공");
+        updateUsers();
       } else {
         alert("삭제 실패");
       }
@@ -98,5 +96,28 @@ function deleteUser(userId) {
     .catch((error) => {
       console.error("삭제 중 오류?", error.message);
       alert("삭제 중 오류가 발생했습니다.");
+    });
+}
+
+function modifyUsers(userId) {
+  const userInput = prompt("수정할 이름을 입력하세요.");
+  console.log(`userInput: ${userInput}`);
+
+  fetch(`/user/${userId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
+    body: userInput,
+  })
+    .then((response) => {
+      if (response.ok) {
+        alert("수정 성공");
+        updateUsers();
+      } else {
+        alert("수정 실패");
+      }
+    })
+    .catch((error) => {
+      console.error("수정 중 오류 발생", error.message);
+      alert("수정 중 오류가 발생했습니다.");
     });
 }

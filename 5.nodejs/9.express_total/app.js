@@ -1,5 +1,3 @@
-// 새로운 폴더니 익스프레스 설치
-
 // 외부 모듈 import
 const express = require("express");
 const path = require("path");
@@ -15,22 +13,24 @@ app.use("/static", express.static("static")); // 이렇게 접근할 때 우리�
 app.use("/image", express.static("static/image")); // 이미지 오면 static에서 가져가
 
 app.use(express.json());
+app.use(express.text()); // 콘텐트타입이 text/plain일 경우 텍스트 데이터를 파싱할 수 있도록
 
 // 라우트
+// GET
 app.get("/", (req, res) => {
   const filePath = path.resolve(__dirname, "index.html");
   res.sendFile(filePath);
 });
 
 app.get("/about", (req, res) => {
-  //join??
-  res.sendFile(path.resolve(__dirname, "about.html"));
+  res.sendFile(path.resolve(__dirname, "about.html")); //join??
 });
 
 app.get("/user", (req, res) => {
   res.json(users); //json 형태로 req.body에 들어감
 });
 
+// POST
 app.post("/user", (req, res) => {
   // const name = req.body.name;
   const { name } = req.body;
@@ -38,15 +38,33 @@ app.post("/user", (req, res) => {
   res.status(201).send("등록 성공"); // 201은 created
 });
 
-app.put("/user", (req, res) => {
-  res.send("이제 짜야함...");
-});
-// 수정, id를 받아와야함
+// PUT
+app.put("/user/:id", (req, res) => {
+  const userId = req.params.id;
+  // 텍스트로 온 거 -> 미들웨어 처리. 안하면 값 없음.
+  // console.log(`body: ${req.body}`);
 
-app.delete("/user", (res, req) => {
-  res.send("이제 짜야함");
+  if (userId in users) {
+    users[userId] = req.body;
+    res.status(200).send("수정 성공");
+  } else {
+    // 에러 처리
+    // 해당 사용자 없음
+    res.status(400).send("수정 실패");
+  }
 });
-// 삭제, id를 받아와야함
+
+// DELETE
+app.delete("/user/:id", (req, res) => {
+  const userId = req.params.id;
+  if (userId in users) {
+    delete users[userId];
+    res.status(200).send("삭제 성공");
+  } else {
+    // 에러 처리
+    // 해당 사용자 없음
+  }
+});
 
 // 오류미들웨어
 
