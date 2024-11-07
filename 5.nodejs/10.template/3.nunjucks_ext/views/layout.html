@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{{ title }}</title>
+  </head>
+  <body>
+    <nav>
+      <a href="#">상단메뉴1</a>
+      <a href="#">상단메뉴2</a>
+      <a href="#">상단메뉴3</a>
+    </nav>
+    <header>
+      <h1>{{ header }}</h1>
+    </header>
+    <main>
+      {% block content %}
+      <!-- 여기가 동적으로 변경될 내용 -->{% endblock %}
+    </main>
+    <footer>
+      <!-- 푸터 내용 -->
+      <p>copyright 기타 등등</p>
+    </footer>
+  </body>
+</html>

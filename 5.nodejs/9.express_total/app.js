@@ -18,12 +18,12 @@ app.use(express.text()); // 콘텐트타입이 text/plain일 경우 텍스트 �
 // 라우트
 // GET
 app.get("/", (req, res) => {
-  const filePath = path.resolve(__dirname, "index.html");
+  const filePath = path.join(__dirname, "static", "index.html");
   res.sendFile(filePath);
 });
 
 app.get("/about", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "about.html")); //join??
+  res.sendFile(path.join(__dirname, "static", "about.html")); //join??
 });
 
 app.get("/user", (req, res) => {
@@ -67,6 +67,10 @@ app.delete("/user/:id", (req, res) => {
 });
 
 // 오류미들웨어
+app.use((req, res) => {
+  const errorPage = path.join(__dirname, "static", "error.html");
+  res.status(404).sendFile(errorPage);
+});
 
 //서버 시작
 app.listen(PORT, () => {
