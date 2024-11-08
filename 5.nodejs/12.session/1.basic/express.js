@@ -1,5 +1,5 @@
 const express = require("express");
-const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser"); // http 요청에 포함된 쿠키를 파싱하여 req.copkies 객체로 제공
 
 const app = express();
 const port = 3000;

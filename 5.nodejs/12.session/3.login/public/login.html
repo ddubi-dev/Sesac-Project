@@ -18,18 +18,17 @@
     </style>
   </head>
   <body>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+      <a href="/profile">Profile</a>
+      <a href="/logout">Logout</a>
+    </nav>
+
     <h2>Login</h2>
-
-    <!-- <nav>
-      <a href="#">Home</a>
-      <a href="#">Login</a>
-      <a href="#">Profile</a>
-      <a href="#">Logout</a>
-    </nav> -->
-
-    <form action="/login" method="post">
+    <form action="/login" method="post" id="loginForm">
       <label for="username">Username:</label>
-      <input type="text" id="username" required />
+      <input type="text" id="username" name="username" required />
       <!-- 셀프 클로징 태그 -->
       <br />
       <label for="password">Password:</label>
@@ -38,5 +37,8 @@
       <br />
       <input type="submit" value="로그인" />
     </form>
+
+    <!-- <script src="public/js/login.js"></script> -->
+    <!-- ★★★public -->
   </body>
 </html>

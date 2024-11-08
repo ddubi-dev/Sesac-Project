@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LOGIN page</title>
+    <style>
+      nav {
+        background-color: lightgray;
+      }
+      nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      nav li {
+        float: left;
+      }
+      nav a {
+        display: block;
+        padding: 14px 16px;
+        color: #333;
+        text-decoration: none;
+      }
+      nav a:hover {
+        background-color: #ddd;
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Login</a></li>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#">Logout</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <h2>Login</h2>
+
+      <form action="/login" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required />
+        <!-- 셀프 클로징 태그 -->
+        <br />
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required />
+        <!-- 글자 보이지 말라고, js에서 가져오려고 id, 정보 요청할 때 메소드에 붙여서 갈 때 불러오려고 -->
+        <br />
+        <input type="submit" id="loginButton" value="로그인" />
+      </form>
+    </div>
+  </body>
+</html>

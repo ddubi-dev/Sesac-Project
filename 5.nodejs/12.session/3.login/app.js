@@ -5,19 +5,22 @@ const path = require("path");
 const app = express();
 const PORT = 3000;
 
-// 로그인 창 만들기
-
-// 로그인 유지
+// 미들웨어
 app.use(
   session({
-    secret: "my-secret-key",
-    resave: false,
-    saveUninitialized: true,
+    secret: "my-secret-key", // 세션 암호화 키
+    resave: false, // 세션 데이터가 변경되지 않으면 저장하지 않음
+    saveUninitialized: true, // 초기화하지 않은 세션을 저장
+    cookie: { maxAge: 60000 }, // 쿠키 만료 시간 설정
   })
 );
 
+app.use("/public", express.static("public"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "login.html"));
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 const users = [
@@ -25,22 +28,42 @@ const users = [
   { id: 2, username: "user2", password: "pass2" },
 ];
 
+const sessionDB = [];
+
+// 로그인 라우트
+app.get("/login", (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, "public", "login.html"));
+});
 app.post("/login", (req, res) => {
-  // 로그인 코드 개발
   const { username, password } = req.body; // 미들웨어로 파서 추가해야함
-
   // 사용자가 입력한 id/pw를 위의 users 자료구조에서 검색..
-  const user = "검색 구현";
+  let userId = "";
 
-  if (user) {
-    res.json({ message: "로그인 성공" }); // 명시 안하면 기본 값은 200
+  // console.log(`username: ${username}`);
+  // console.log(`password: ${password}`);
+  // console.log(`req.sessionID: ${req.sessionID}`);
+  // console.log(`req.session: ${JSON.stringify(req.session)}`);
+
+  for (let user of users) {
+    if (user.username === username && user.password === password) {
+      req.session.username = user.username;
+      break;
+    }
+  }
+
+  // if (req.session.userId) {
+  //   console.log(`req.session.userId: ${req.session.userId}`);
+  // }
+
+  if (req.session.username) {
+    res.status(200).json({ message: "로그인 성공" });
   } else {
     res.status(401).json({ message: "로그인 실패" });
   }
 });
 
 app.get("/profile", (req, res) => {
-  const user = "세션에서 사용자 정보 가져온다";
+  const user = req.session;
 
   if (user) {
     res.json({ username: user.username, message: "프로필 정보" });
@@ -49,11 +72,17 @@ app.get("/profile", (req, res) => {
   }
 });
 
-// 로그아웃은 어떻게???
+// 로그아웃
 app.get("/logout", (req, res) => {
-  // 세션에서 사용자 정보를 삭제. 어떻게???? 찾아보기~
+  // 세션에서 사용자 정보 삭제
+  req.session.destroy((error) => {
+    if (error){
+      res.status(400).send("로그아웃 중 오류 발생");
+    }
+    res.status(200).sendFile(path.join(__dirname, "public", "logout.html"));
+  });
 });
 
-app.listen(port, () => {
+app.listen(PORT, () => {
   console.log("서버 레디");
 });
