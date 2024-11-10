@@ -63,7 +63,11 @@ app.get("/logout", (req, res) => {
   const user = req.session.user;
 
   if (user && user.username) {
-    req.session.destroy(); // 나의 유저를 관리하던 세션 삭제
+    req.session.destroy((error) => {
+      if (error) {
+        return res.status(500).send("로그아웃 실패");
+      }
+    }); // 나의 유저를 관리하던 세션 삭제
     res.json({ message: "로그아웃 성공" });
   } else {
     res.json({ message: "잉? 로그인 한 적이 없는데?" });
