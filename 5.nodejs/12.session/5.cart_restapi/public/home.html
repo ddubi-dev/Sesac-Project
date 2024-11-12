@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>홈</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/products">Products</a></li>
+        <li><a href="/cart">Cart</a></li>
+        <div id="user-info" style="display: none">
+          <!-- 사용자 정보와 로그아웃 버튼이 추가될 곳 -->
+        </div>
+        <!-- 사용자 로그인 정보 띄울 곳 미리  & hide -->
+      </ul>
+    </nav>
+    <h2>웰컴투 마이 샵</h2>
+    <p>여기에 아무 정보나 입력하시오.</p>
+    <!-- h1는 하나만, h2는 여러개 가능, SEO 최적화에 좋은 것 -->
+    <div id="loginFormContainer">
+      <h2>로그인</h2>
+      <form id="loginForm">
+        <label for="username">Username:</label>
+        <!-- label은 별로 중요하지 않음, 설명해줌 -->
+        <input type="text" id="username" name="username" required /> <br />
+        <!-- id: js, DOM 얻을 때 필요 // name: get방식 요청할때 key 값 -->
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required /> <br />
+        <button type="submit" id="login">Login</button>
+      </form>
+    </div>
+
+    <!-- 로그인 전에 숨김, 로그인 후 보여짐 -->
+    <div id="profile" style="display: none">
+      <h2>안녕하세요, <span id="usernameSpan"></span>님!</h2>
+    </div>
+    <script type="module" src="js/home.js"></script>
+  </body>
+</html>
