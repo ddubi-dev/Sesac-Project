@@ -108,19 +108,45 @@ app.delete("/users/:id", (req, res) => {
 
 // 3. 상품 검색 - all()
 app.get("/products", (req, res) => {
-  console.log(`상품 검색`);
-
-  const name = req.query.name;
-  let param = name.slice(1, -1);
+  const { name } = req.query;
 
   if (name) {
-    const rows = db.prepare(`SELECT * FROM products WHERE name LIKE ?`).all(`%${param}%`);
-    console.log(rows);
+    const query = db.prepare("SELECT * FROM products WHERE name LIKE ?");
+    // ?가 하는 역할. 이스케이프문자가 오는지 확인
+    const rows = query.all(`%${name}%`); // all 은 [], get {}
+    res.json(rows);
+  } else {
+    const query = db.prepare("SELECT * FROM products").all();
     res.json(rows);
   }
+
+  // const { name } = req.query;
+  // let param = name.slice(1, -1); // name="상품"
+
+  // if (name) {
+  //   const rows = db.prepare(`SELECT * FROM products WHERE name LIKE ?`).all(`%${param}%`);
+  //   console.log(rows);
+  //   res.json(rows);
+  // }
 });
 
-// 4. 로그인 기능 구현 - users를 통해서 db의 id/pw 체크 -
-app.app.listen(PORT, () => {
+// 취약한 코드
+app.get("/products_weak", (req, res) => {
+  // http://localhost:3000/products_weak?name=' OR '1'='1
+  // ' UNION SELECT * FROM users --
+  // 입력값을 검증하지 않고 넣음, 뒤에서부터 바꿀 수 있음.
+
+  const { name } = req.query; // name으로 들어온 걸 const name으로 만들기!!!
+
+  const queryStr = `SELECT * FROM products WHERE name LIKE '%${name}%'`;
+  const query = db.prepare(queryStr);
+
+  const rows = query.all();
+  res.json(rows);
+});
+
+// 4. 로그인 기능 구현 - users를 통해서 db의 id/pw 체크
+
+app.listen(PORT, () => {
   console.log("서버 레디");
 });

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+  </head>
+  <body>
+    <h1>로그인</h1>
+    <form id="login-form">
+      <!-- html은 대소문자 구분X -->
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required /><br />
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required /><br />
+      <!-- type=안보이게, id=js에서 가져올때, name=입력한 값에 대한 key -->
+      <button id="loginButton" type="submit">로그인</button>
+    </form>
+    <p id="login-message" style="color: red"></p>
+    <script src="login.js"></script>
+  </body>
+</html>
