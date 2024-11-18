@@ -26,15 +26,36 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/search", (req, res) => {
-  const { searchQuery, page = 1 } = req.query; //  페이지 기본값 1
+  const { choice, searchQuery, page = 1 } = req.query; //  페이지 기본값 1
   //   const searchQuery = req.query.searchQuery;
   //   const page = req.query.page;
-  console.log("검색 값: ", searchQuery, "|", "출력할 페이지: ", page);
   const itemsPerPage = 10; // 페이지당 열개만 출력
   const offset = (page - 1) * itemsPerPage; // page:1 0~10, page:2 10~20 | offset 어디서부터
 
+  let countSql = "";
+  let sql = "";
+
+  if (choice == "artists") {
+    countSql = `SELECT COUNT(*) AS count FROM artists WHERE name Like ?`;
+    sql = `SELECT * FROM artists WHERE name Like ? LIMIT ? OFFSET ?`; // sql injection에 취약하기 때문에 prepared statement 사용
+  } else if (choice == "albums") {
+    countSql = `SELECT COUNT(*) AS count FROM albums WHERE Title Like ?`;
+    sql = `SELECT * FROM albums WHERE Title Like ? LIMIT ? OFFSET ?`;
+  } else if (choice == "tracks") {
+    countSql = `SELECT COUNT(*) AS count FROM tracks WHERE name Like ?`;
+    sql = `SELECT * FROM tracks WHERE name Like ? LIMIT ? OFFSET ?`;
+  } else if (choice == "composer") {
+    countSql = `SELECT COUNT(*) AS count FROM tracks WHERE Composer Like ?`;
+    sql = `SELECT * FROM tracks WHERE Composer Like ? LIMIT ? OFFSET ?`;
+  } else if (choice == "genre") {
+    countSql = `SELECT COUNT(*) AS count FROM genres WHERE Name Like ?`;
+    sql = `SELECT * FROM genres WHERE Name Like ? LIMIT ? OFFSET ?`;
+  } else if (choice == "customer") {
+    countSql = `SELECT COUNT(*) AS count FROM customers WHERE LastName||" "||FirstName Like ?`;
+    sql = `SELECT LastName||" "||FirstName as Name FROM customers WHERE LastName|""|FirstName Like ? LIMIT ? OFFSET ?`;
+  }
+
   // 사용자가 요청한 내용이 몇개나 있고, 그게 몇 페이지가 될건지 계산하기
-  const countSql = `SELECT COUNT(*) AS count FROM artists WHERE name Like ?`;
   db.get(countSql, [`%${searchQuery}%`], (err, row) => {
     if (err) {
       console.error(err.message);
@@ -43,7 +64,6 @@ app.get("/api/search", (req, res) => {
     const totalPage = Math.ceil(row.count / itemsPerPage); // 무조건 올림
     console.log("검색한 행의 개수: ", row.count, "토탈 페이지: ", totalPage, "offset: ", offset);
 
-    const sql = `SELECT * FROM artists WHERE name Like ? LIMIT ? OFFSET ?`; // sql injection에 취약하기 때문에 prepared statement 사용
     db.all(sql, [`%${searchQuery}%`, itemsPerPage, offset], (err, rows) => {
       // 비동기
       if (err) {

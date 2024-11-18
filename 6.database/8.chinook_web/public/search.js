@@ -6,11 +6,14 @@ document.getElementById("searchForm").addEventListener("submit", (e) => {
   const searchQuery = document.getElementById("searchQuery").value;
   //   console.log(searchQuery);
 
-  search(searchQuery, 1); // 검색의 시작은 1페이지부터 한다.
+  const choice = document.getElementById("choices").value;
+  // 아티스트, 앨범, 트랙, 작곡가, 장르, 고객이름
+  // const selectList = [{ artists }];
+
+  search(choice, searchQuery, 1); // 검색의 시작은 1페이지부터 한다.
 });
 
-async function search(searchQuery, page) {
-  console.log("current page: ", page);
+async function search(choice, searchQuery, page) {
   // 2. 요청
   //   const response = await fetch("/api/search", {
   //     method: "GET",
@@ -21,7 +24,7 @@ async function search(searchQuery, page) {
   //     // post - body를 담음
   //   });
 
-  const response = await fetch(`/api/search?searchQuery=${encodeURIComponent(searchQuery)}&page=${page}`);
+  const response = await fetch(`/api/search?choice=${choice}&searchQuery=${encodeURIComponent(searchQuery)}&page=${page}`);
   // body가 없으니 headers도 필요 없음
   // fetch : 비동기
   // response.ok 해야함
@@ -33,9 +36,21 @@ async function search(searchQuery, page) {
   results.innerHTML = ""; // 기존에 있는 것 초기화
 
   if (data.results && data.results.length > 0) {
-    data.results.forEach((artist) => {
+    data.results.forEach((datum) => {
       const li = document.createElement("li");
-      li.textContent = artist.Name;
+      if (choice == "artists") {
+        li.textContent = datum.Name;
+      } else if (choice == "albums") {
+        li.textContent = datum.Title;
+      } else if (choice == "tracks") {
+        li.textContent = datum.Name;
+      } else if (choice == "composer") {
+        li.textContent = datum.Composer;
+      } else if (choice == "genre") {
+        li.textContent = datum.Name;
+      } else if (choice == "customer") {
+        li.textContent = datum.Name;
+      }
       results.append(li);
     });
   } else {
@@ -47,10 +62,10 @@ async function search(searchQuery, page) {
   // 4. 페이징 처리를 한다.
   const currentPage = parseInt(data.currentPage);
   const totalPage = parseInt(data.totalPage);
-  displayPagination(searchQuery, currentPage, totalPage);
+  displayPagination(choice, searchQuery, currentPage, totalPage);
 }
 
-function displayPagination(searchQuery, currentPage, totalPage) {
+function displayPagination(choice, searchQuery, currentPage, totalPage) {
   const pagination = document.getElementById("pagination");
   pagination.innerHTML = ""; // 리셋하고 시작하기
 
@@ -58,7 +73,7 @@ function displayPagination(searchQuery, currentPage, totalPage) {
   const prevButton = document.createElement("button");
   prevButton.textContent = "이전";
   if (currentPage > 1) {
-    prevButton.onclick = () => search(searchQuery, currentPage - 1);
+    prevButton.onclick = () => search(choice, searchQuery, currentPage - 1);
   }
   pagination.appendChild(prevButton);
 
@@ -71,7 +86,7 @@ function displayPagination(searchQuery, currentPage, totalPage) {
   const nextButton = document.createElement("button");
   nextButton.textContent = "다음";
   if (currentPage < totalPage) {
-    nextButton.onclick = () => search(searchQuery, currentPage + 1);
+    nextButton.onclick = () => search(choice, searchQuery, currentPage + 1);
   }
   pagination.appendChild(nextButton);
 }
