@@ -10,6 +10,7 @@ document.getElementById("searchForm").addEventListener("submit", (e) => {
 });
 
 async function search(searchQuery, page) {
+  console.log("current page: ", page);
   // 2. 요청
   //   const response = await fetch("/api/search", {
   //     method: "GET",
@@ -44,7 +45,9 @@ async function search(searchQuery, page) {
   }
 
   // 4. 페이징 처리를 한다.
-  displayPagination(searchQuery, parseInt(data.currentPage), parseInt(data.totalPage));
+  const currentPage = parseInt(data.currentPage);
+  const totalPage = parseInt(data.totalPage);
+  displayPagination(searchQuery, currentPage, totalPage);
 }
 
 function displayPagination(searchQuery, currentPage, totalPage) {
@@ -54,6 +57,9 @@ function displayPagination(searchQuery, currentPage, totalPage) {
   // 이전 버튼 추가
   const prevButton = document.createElement("button");
   prevButton.textContent = "이전";
+  if (currentPage > 1) {
+    prevButton.onclick = () => search(searchQuery, currentPage - 1);
+  }
   pagination.appendChild(prevButton);
 
   // 내용 출력
@@ -64,6 +70,8 @@ function displayPagination(searchQuery, currentPage, totalPage) {
   // 다음 버튼 추가
   const nextButton = document.createElement("button");
   nextButton.textContent = "다음";
-  nextButton.onclick = () => search(searchQuery, currentPage + 1);
+  if (currentPage < totalPage) {
+    nextButton.onclick = () => search(searchQuery, currentPage + 1);
+  }
   pagination.appendChild(nextButton);
 }
