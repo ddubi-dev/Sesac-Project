@@ -21,7 +21,8 @@ function queryName(db, searchName) {
 }
 
 function queryAll(db, searchOptions) {
-  let selectQuery = "SELECT * FROM employees WHERE 1=1 "; // 의미없지만 true이고, 1=1을 통해 일괄성 있게 만들어서 정상 동작하게 만듦.
+  let selectQuery = "SELECT * FROM employees WHERE 1=1 ";
+  // 의미없지만 true이고, 1=1을 통해 일괄성 있게 만들어서 정상 동작하게 만듦.
   const queryParams = [];
 
   if (searchOptions.name) {
