@@ -25,7 +25,7 @@ async function search(searchQuery, page) {
   // fetch : 비동기
   // response.ok 해야함
   const data = await response.json();
-  //   console.log(data);
+  console.log("받은 데이터: ", data);
 
   // 3. 받아온 걸 DOM에 렌더링
   const results = document.getElementById("results");
@@ -44,7 +44,7 @@ async function search(searchQuery, page) {
   }
 
   // 4. 페이징 처리를 한다.
-  displayPagination(parseInt(data.currentPage), parseInt(data.totalPage));
+  displayPagination(searchQuery, parseInt(data.currentPage), parseInt(data.totalPage));
 }
 
 function displayPagination(searchQuery, currentPage, totalPage) {

@@ -1,8 +1,8 @@
 // 라이브러리 추가
 require("dotenv").config(); // 불러오면 끝. 굳이 변수 사용X
 const express = require("express");
-const sqlite3 = require("sqlite3");
-// const sqlite3 = require('sqlite3').verbose();
+// const sqlite3 = require("sqlite3");
+const sqlite3 = require("sqlite3").verbose();
 // 이건 개발 환경에서만 사용! 배포시 지워야 함.
 const path = require("path");
 
@@ -37,19 +37,23 @@ app.get("/api/search", (req, res) => {
   const countSql = `SELECT COUNT(*) AS count FROM artists WHERE name Like ?`;
   db.get(countSql, [`%${searchQuery}%`], (err, row) => {
     if (err) {
-      console.err(err.message);
+      console.error(err.message);
       res.status(500);
     }
     const totalPage = Math.ceil(row.count / itemsPerPage); // 무조건 올림
-    console.log("검색한 행의 개수: ", row.count, "토탈 페이지: ", totalPage);
+    console.log("검색한 행의 개수: ", row.count, "토탈 페이지: ", totalPage, "offset: ", offset);
 
-    const sql = `SELECT * FROM artists WHERE name Like ? LIMIT ? OFFSET = ?`; // sql injection에 취약하기 때문에 prepared statement 사용
+    const sql = `SELECT * FROM artists WHERE name Like ? LIMIT ? OFFSET ?`; // sql injection에 취약하기 때문에 prepared statement 사용
     db.all(sql, [`%${searchQuery}%`, itemsPerPage, offset], (err, rows) => {
-      // 비동기 구문
+      // 비동기
       if (err) {
+        console.log("여기 에러야");
         // 여기에 에러처리(400,500)
+        console.error(err.message);
+        res.status(500);
         return;
       }
+      console.log("여기 밖이야");
       res.json({ results: rows, currentPage: page, totalPage: totalPage, status: "ok" });
       // res.json();
       // 그냥 다이렉트로 보내도 되고, 형식 정해서 (프론트-백)
