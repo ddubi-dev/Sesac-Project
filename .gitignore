@@ -21,3 +21,7 @@ package-lock.json
 
 # 각종 로그파일 제외
 *.log
+
+*.zip
+*.vscode
+
