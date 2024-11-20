@@ -8,7 +8,7 @@ searchButton.addEventListener("click", () => {
 
 function fetchUsers(name) {
   // async/await or promise
-  fetch("/api/users")
+  fetch(`/api/users/${name}`)
     .then((response) => response.json())
     .then((data) => {
       renderTable(data);

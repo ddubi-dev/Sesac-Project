@@ -12,6 +12,7 @@ const db = new sqlite3.Database("user-sample.db");
 const logStream = fs.createWriteStream(path.join(__dirname, "access.log"), { flags: "a" });
 
 // 미들웨어
+app.use(express.text());
 app.use(express.static("public"));
 app.use(morgan("combined", { stream: logStream }));
 // app.use(morgan("dev"));
@@ -45,9 +46,25 @@ app.get("/api/users", (req, res) => {
   });
 });
 
-app.get("/api/users/:id", (req, res) => {
+app.get("/api/users/:name", (req, res) => {
   // console.log("/api/users/:id 호출됨");
 
+  const userId = req.params.name;
+  const query = `SELECT * FROM users WHERE name = ?`;
+
+  if (userId) {
+    db.all(query, userId, (err, row) => {
+      if (!row) {
+        // 에러 처리
+        res.status(404).json({ error: "사용자가 없습니다." });
+      } else {
+        res.json(row);
+      }
+    });
+  }
+});
+
+app.get("/api/users/Id/:id", (req, res) => {
   const userId = req.params.id;
   const query = `SELECT * FROM users WHERE id = ?`;
 
