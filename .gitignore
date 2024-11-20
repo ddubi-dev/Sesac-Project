@@ -12,11 +12,12 @@ package-lock.json
 !ascii.txt
 
 #DB 파일 예회
-.db
-.sqlite
-.sqlite3
+*.db
+*.sqlite
+*.sqlite3
 
 # credentials - 민감정보들
-.env
+*.env
 
-
+# 각종 로그파일 제외
+*.log
