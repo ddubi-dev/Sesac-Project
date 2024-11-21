@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
 async function fetchUser(name, gender, currentPage) {
   const response = await fetch(`api/users?name=${encodeURIComponent(name)}&gender=${encodeURIComponent(gender)}&page=${currentPage}`);
   if (!response.ok) {
-    // 에러
     console.log("fetch에서 에러 발생");
     const result = document.getElementById("result");
 
@@ -26,7 +25,6 @@ async function fetchUser(name, gender, currentPage) {
       result.innerHTML = `알 수 없는 오류 발생`;
     }
 
-    console.log("error: ", JSON.stringify(response.json()));
     return;
   }
 

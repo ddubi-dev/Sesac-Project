@@ -1,5 +1,6 @@
 // 라이브러리
 require("dotenv").config(); //.env 파일 불러옴.
+const { count } = require("console");
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
@@ -23,12 +24,28 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "user.html"));
 });
 
+app.get("/order", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "order.html"));
+});
+
+app.get("/orderItem", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "orderItem.html"));
+});
+
+app.get("/item", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "item.html"));
+});
+
+app.get("/store", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "store.html"));
+});
+
 app.get("/api/users", (req, res) => {
   // pagination
   const { name, gender, page = 1 } = req.query;
   const itemsPerPage = 20;
   const offset = (page - 1) * itemsPerPage; // 0:0~19, 1:20~39, ...
-  let countSql = 0;
+  let countSql = ``;
   const queryParams = [];
 
   if (name) {
@@ -89,31 +106,64 @@ app.get("/api/users", (req, res) => {
   });
 });
 
-app.get("/api/users/:name", (req, res) => {
-  // 검색시 pagination
-  const { choice, searchQuery, page = 1 } = req.query;
+app.get("/api/orders", (req, res) => {
+  // pagination
+  const { page = 1 } = req.query;
+  const itemsPerPage = 20;
+  const offset = (page - 1) * itemsPerPage; // 0:0~19, 1:20~39, ...
+  let countSql = 0;
 
-  const name = req.params.name;
-  let selectQuery = `SELECT * FROM users WHERE 1=1 `;
-  const queryParams = [];
+  const countQuery = `SELECT COUNT(*) AS count FROM orders`;
 
-  if (name) {
-    selectQuery += `AND name = ?`;
-    queryParams.push = [name];
-  }
-  console.log("1. 여기까진 옴");
-
-  db.all(selectQuery, queryParams, (err, rows) => {
-    console.log("2. 여기까진 옴");
-    if (!rows) {
-      console.log("rows 없음");
-      res.status(404);
-      // res.status(404).json({ error: `해당 이름(${name})을 사용자가 없습니다.` });
+  db.get(countQuery, (err, row) => {
+    if (err) {
+      //
     } else {
-      res.json(rows);
+      const totalPage = Math.ceil(row.count / itemsPerPage);
+
+      const selectQuery = `SELECT * FROM orders LIMIT ? OFFSET ?`;
+
+      db.all(selectQuery, [itemsPerPage, offset], (err, rows) => {
+        if (err) {
+          //
+        } else {
+          res.json({ result: rows, currentPage: page, totalPage: totalPage, status: "ok" });
+        }
+      });
     }
   });
 });
+
+app.get("/api/orderItems", (req, res) => {
+  // pagination
+  const { page = 1 } = req.query;
+  const itemsPerPage = 20;
+  const offset = (page - 1) * itemsPerPage; // 0:0~19, 1:20~39, ...
+  let countSql = 0;
+
+  const countQuery = `SELECT COUNT(*) AS count FROM order_items`;
+
+  db.get(countQuery, (err, row) => {
+    if (err) {
+      //
+    } else {
+      const totalPage = Math.ceil(row.count / itemsPerPage);
+
+      const selectQuery = `SELECT * FROM order_items LIMIT ? OFFSET ?`;
+
+      db.all(selectQuery, [itemsPerPage, offset], (err, rows) => {
+        if (err) {
+          //
+        } else {
+          res.json({ result: rows, currentPage: page, totalPage: totalPage, status: "ok" });
+        }
+      });
+    }
+  });
+});
+
+app.get("/api/items", (req, res) => {});
+app.get("/api/stores", (req, res) => {});
 
 app.listen(PORT, () => {
   console.log(`Server is on http://localhost:${PORT} `);
