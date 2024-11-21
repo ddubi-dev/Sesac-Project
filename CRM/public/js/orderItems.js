@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-  fetchOrderItem(1);
+  fetchItems(1);
 });
 
-async function fetchOrderItem(page) {
+async function fetchItems(page) {
   const response = await fetch(`/api/orderItems?page=${page}`);
 
   if (!response.ok) {
@@ -67,7 +67,7 @@ function displayPagination(currentPage, totalPage) {
   const prevButton = document.createElement("button");
   prevButton.textContent = "이전";
   if (currentPage > 1) {
-    prevButton.onclick = () => fetchOrderItem(currentPage - 1);
+    prevButton.onclick = () => fetchItems(currentPage - 1);
   }
   pagination.appendChild(prevButton);
 
@@ -81,7 +81,7 @@ function displayPagination(currentPage, totalPage) {
   nextButton.textContent = "다음";
   if (currentPage < totalPage) {
     nextButton.onclick = () => {
-      fetchOrderItem(currentPage + 1);
+      fetchItems(currentPage + 1);
     };
   }
   pagination.appendChild(nextButton);

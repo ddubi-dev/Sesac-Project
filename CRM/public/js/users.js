@@ -29,7 +29,6 @@ async function fetchUser(name, gender, currentPage) {
   }
 
   const data = await response.json();
-  //   console.log("data: ", JSON.stringify(data));
 
   const tableHeader = document.getElementById("table-header");
   tableHeader.innerHTML = ``;

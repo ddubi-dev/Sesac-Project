@@ -162,8 +162,61 @@ app.get("/api/orderItems", (req, res) => {
   });
 });
 
-app.get("/api/items", (req, res) => {});
-app.get("/api/stores", (req, res) => {});
+app.get("/api/items", (req, res) => {
+  // pagination
+  const { page = 1 } = req.query;
+  const itemsPerPage = 20;
+  const offset = (page - 1) * itemsPerPage; // 0:0~19, 1:20~39, ...
+  let countSql = 0;
+
+  const countQuery = `SELECT COUNT(*) AS count FROM items`;
+
+  db.get(countQuery, (err, row) => {
+    if (err) {
+      //
+    } else {
+      const totalPage = Math.ceil(row.count / itemsPerPage);
+
+      const selectQuery = `SELECT * FROM items LIMIT ? OFFSET ?`;
+
+      db.all(selectQuery, [itemsPerPage, offset], (err, rows) => {
+        if (err) {
+          //
+        } else {
+          res.json({ result: rows, currentPage: page, totalPage: totalPage, status: "ok" });
+        }
+      });
+    }
+  });
+});
+
+app.get("/api/stores", (req, res) => {
+  // pagination
+  const { page = 1 } = req.query;
+  const itemsPerPage = 20;
+  const offset = (page - 1) * itemsPerPage; // 0:0~19, 1:20~39, ...
+  let countSql = 0;
+
+  const countQuery = `SELECT COUNT(*) AS count FROM stores`;
+
+  db.get(countQuery, (err, row) => {
+    if (err) {
+      //
+    } else {
+      const totalPage = Math.ceil(row.count / itemsPerPage);
+
+      const selectQuery = `SELECT * FROM stores LIMIT ? OFFSET ?`;
+
+      db.all(selectQuery, [itemsPerPage, offset], (err, rows) => {
+        if (err) {
+          //
+        } else {
+          res.json({ result: rows, currentPage: page, totalPage: totalPage, status: "ok" });
+        }
+      });
+    }
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Server is on http://localhost:${PORT} `);
