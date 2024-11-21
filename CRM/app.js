@@ -39,7 +39,7 @@ app.get("/api/users", (req, res) => {
   }
 
   // 동기화 처리
-  db.get(countSql, (err, row) => {
+  db.get(countSql, queryParams, (err, row) => {
     if (err) {
       // 에러 처리
       res.status(500).json({ message: err.message });
@@ -49,10 +49,17 @@ app.get("/api/users", (req, res) => {
       return;
     } else {
       const totalPage = Math.ceil(row.count / itemsPerPage);
+      let selectQuery = ``;
+      const queryParams2 = [itemsPerPage, offset];
 
-      const selectQuery = `SELECT * FROM users Limit ? OFFSET ?`;
+      if (name) {
+        selectQuery = `SELECT * FROM users WHERE name = ? Limit ? OFFSET ?`;
+        queryParams2.unshift(name);
+      } else {
+        selectQuery = `SELECT * FROM users Limit ? OFFSET ?`;
+      }
 
-      db.all(selectQuery, [itemsPerPage, offset], (err, rows) => {
+      db.all(selectQuery, queryParams2, (err, rows) => {
         if (err) {
           console.error(err.message);
           res.status(500);
