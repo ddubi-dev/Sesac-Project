@@ -4,7 +4,7 @@ const path = require("path");
 const morgan = require("morgan");
 const fs = require("fs");
 
-//.env
+//.env 으로 하는게 좋음
 const app = express();
 const PORT = 3000;
 const db = new sqlite3.Database("user-sample.db");

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Customer Relationship Management</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <nav>
+      <div id="nav">
+        <a href="./user.html">User</a>
+        <a href="./order.html">Order</a>
+        <a href="./orderItem.html">OrderItem</a>
+        <a href="./item.html">Item</a>
+        <a href="./store.html">Store</a>
+      </div>
+    </nav>
+
+    <div>
+      <label>Name:</label>
+      <input type="text" id="inputName" />
+      <label>Gender:</label>
+      <select name="gender" id="gender">
+        <option value="allGender"></option>
+        <option value="female">female</option>
+        <option value="male">male</option>
+      </select>
+      <button type="submit">Submit</button>
+    </div>
+
+    <div>
+      <table>
+        <thead id="table-header"></thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+
+    <div id="pagination"></div>
+    <script src="./js/users.js"></script>
+  </body>
+</html>
