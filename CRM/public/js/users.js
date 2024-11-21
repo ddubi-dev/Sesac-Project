@@ -1,15 +1,37 @@
 document.addEventListener("DOMContentLoaded", () => {
-  fetchUser("", 1);
+  fetchUser("", "", 1);
+
+  document.getElementById("submit").addEventListener("click", () => {
+    const name = document.getElementById("inputName").value;
+    const gender = document.getElementById("gender").value;
+    // "", female, male
+
+    console.log("name: ", name, "gender: ", gender);
+    fetchUser(name, gender, 1);
+  });
 });
 
-async function fetchUser(name, currentPage) {
-  const response = await fetch(`api/users?name=${encodeURIComponent(name)}&page=${currentPage}`);
+async function fetchUser(name, gender, currentPage) {
+  const response = await fetch(`api/users?name=${encodeURIComponent(name)}&gender=${encodeURIComponent(gender)}&page=${currentPage}`);
   if (!response.ok) {
     // 에러
     console.log("fetch에서 에러 발생");
+    const result = document.getElementById("result");
+
+    try {
+      const errorData = await response.json();
+      result.innerHTML = `<p>${errorData.message}</p>`;
+    } catch (err) {
+      console.log("JSON 파싱 실패:", err);
+      result.innerHTML = `알 수 없는 오류 발생`;
+    }
+
+    console.log("error: ", JSON.stringify(response.json()));
     return;
   }
+
   const data = await response.json();
+  //   console.log("data: ", JSON.stringify(data));
 
   const tableHeader = document.getElementById("table-header");
   tableHeader.innerHTML = ``;
@@ -55,10 +77,10 @@ async function fetchUser(name, currentPage) {
   });
 
   // pagination
-  displayPagination(name, parseInt(data.currentPage), parseInt(data.totalPage));
+  displayPagination(name, gender, parseInt(data.currentPage), parseInt(data.totalPage));
 }
 
-function displayPagination(name, currentPage, totalPage) {
+function displayPagination(name, gender, currentPage, totalPage) {
   const pagination = document.getElementById("pagination");
   pagination.innerHTML = ``;
 
@@ -66,7 +88,7 @@ function displayPagination(name, currentPage, totalPage) {
   const prevButton = document.createElement("button");
   prevButton.textContent = "이전";
   if (currentPage > 1) {
-    prevButton.onclick = () => fetchUser(name, currentPage - 1);
+    prevButton.onclick = () => fetchUser(name, gender, currentPage - 1);
   }
   pagination.appendChild(prevButton);
 
@@ -80,7 +102,7 @@ function displayPagination(name, currentPage, totalPage) {
   nextButton.textContent = "다음";
   if (currentPage < totalPage) {
     nextButton.onclick = () => {
-      fetchUser(name, currentPage + 1);
+      fetchUser(name, gender, currentPage + 1);
     };
   }
   pagination.appendChild(nextButton);

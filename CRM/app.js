@@ -25,17 +25,25 @@ app.get("/", (req, res) => {
 
 app.get("/api/users", (req, res) => {
   // pagination
-  const { name, page = 1 } = req.query;
+  const { name, gender, page = 1 } = req.query;
   const itemsPerPage = 20;
   const offset = (page - 1) * itemsPerPage; // 0:0~19, 1:20~39, ...
   let countSql = 0;
   const queryParams = [];
 
   if (name) {
-    countSql = `SELECT COUNT(*) AS count  FROM users WHERE name = ?`;
+    countSql = `SELECT COUNT(*) AS count  FROM users WHERE name = ? `;
     queryParams.push(name);
+    if (gender) {
+      countSql += `AND gender = ?`;
+      queryParams.push(gender);
+    }
   } else {
-    countSql = `SELECT COUNT(*) AS count  FROM users`;
+    countSql = `SELECT COUNT(*) AS count  FROM users `;
+    if (gender) {
+      countSql += `WHERE gender = ?`;
+      queryParams.push(gender);
+    }
   }
 
   // 동기화 처리
@@ -54,9 +62,18 @@ app.get("/api/users", (req, res) => {
 
       if (name) {
         selectQuery = `SELECT * FROM users WHERE name = ? Limit ? OFFSET ?`;
-        queryParams2.unshift(name);
+        if (gender) {
+          selectQuery = `SELECT * FROM users WHERE name = ? AND gender = ? Limit ? OFFSET ?`;
+          queryParams2.unshift(name, gender);
+        } else {
+          queryParams2.unshift(name);
+        }
       } else {
         selectQuery = `SELECT * FROM users Limit ? OFFSET ?`;
+        if (gender) {
+          selectQuery = `SELECT * FROM users WHERE gender = ? Limit ? OFFSET ?`;
+          queryParams2.unshift(gender);
+        }
       }
 
       db.all(selectQuery, queryParams2, (err, rows) => {
