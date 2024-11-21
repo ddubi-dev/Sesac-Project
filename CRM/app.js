@@ -122,6 +122,15 @@ app.get("/api/orders", (req, res) => {
       const totalPage = Math.ceil(row.count / itemsPerPage);
 
       const selectQuery = `SELECT * FROM orders LIMIT ? OFFSET ?`;
+      // if (field == "Id") {
+      //   th.textContent = "id";
+      // } else if (field == "OrderAt") {
+      //   th.textContent = "order_at";
+      // } else if (field == "StoreId") {
+      //   th.textContent = "store_id";
+      // } else if (field == "UserId") {
+      //   th.textContent = "user_id";
+      // }
 
       db.all(selectQuery, [itemsPerPage, offset], (err, rows) => {
         if (err) {
@@ -216,6 +225,132 @@ app.get("/api/stores", (req, res) => {
       });
     }
   });
+});
+
+app.get("/user_detail/:userId", (req, res) => {
+  const userId = req.params.userId;
+  res.sendFile(path.join(__dirname, "public", "user_detail.html"));
+});
+
+app.get("/user/:id", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "user_detail.html"));
+});
+
+app.get("/api/user/:id", (req, res) => {
+  const userId = req.params.id;
+  const selectQuery = `SELECT * FROM users WHERE Id = ?`;
+
+  db.get(selectQuery, userId, (err, row) => {
+    if (err) {
+      // 에러 처리
+    } else {
+      res.status(200).json(row);
+    }
+  });
+});
+
+app.get("/api/user/:id/orderInfo", (req, res) => {
+  const userId = req.params.id;
+  const selectQuery = `SELECT orders.Id AS 'order id', orders.OrderAt AS 'purchased date', orders.StoreId AS 'purchased location'
+  FROM orders
+  JOIN users ON orders.UserId = users.Id
+  WHERE orders.UserId = ?
+  ORDER BY OrderAt`;
+
+  db.all(selectQuery, userId, (err, rows) => {
+    if (err) {
+      //에러 처리
+    } else {
+      console.log("rows: ", rows);
+      res.status(200).json(rows);
+    }
+  });
+});
+
+app.get("/orderItem/:orderId", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "orderItem_detail.html"));
+});
+
+app.get("/api/orderItem/:orderId", (req, res) => {
+  const orderId = req.params.orderId;
+  const selectQuery = `SELECT order_items.Id AS "id", order_items.OrderId AS "order_id",  order_items.ItemId AS "item_id", items.Name AS "item_name"
+  FROM order_items
+  JOIN items ON order_items.ItemId = items.Id
+  WHERE order_items.OrderId = ?
+  `;
+
+  db.all(selectQuery, orderId, (err, rows) => {
+    if (err) {
+      //에러 처리
+    } else {
+      res.status(200).json(rows);
+    }
+  });
+
+  // order_items.Id AS "id"
+  // order_items.OrderId AS "order_id"
+  // order_items.ItemId AS "item_id"
+  // items.Name AS "item_name"
+});
+
+app.get("/order/:orderId", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "order_detail.html"));
+});
+
+app.get("/api/order/:orderId", (req, res) => {
+  const orderId = req.params.orderId;
+  const selectQuery = `
+  SELECT orders.Id AS id, orders.OrderAt AS order_at, orders.StoreId AS store_id, orders.UserId AS user_id 
+  FROM orders
+  WHERE orders.Id = ?
+  `;
+
+  db.get(selectQuery, orderId, (err, rows) => {
+    res.status(200).json(rows);
+  });
+});
+
+app.get("/item/:itemId", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "item_detail.html"));
+});
+
+app.get("/api/item/:itemId", (req, res) => {
+  const itemId = req.params.itemId;
+  const selectQuery = `SELECT Name AS name, UnitPrice AS unit_price
+  FROM items WHERE Id = ?`;
+
+  db.get(selectQuery, itemId, (err, row) => {
+    if (err) {
+      // 에러 처리
+    } else {
+      res.status(200).json(row);
+    }
+  });
+});
+
+app.get("/api/item/month/:itemId", (req, res) => {
+  console.log("여기야");
+  const itemId = req.params.itemId;
+  const selectQuery = `SELECT STRFTIME('%Y-%m', orders.OrderAt) AS Month, SUM(items.UnitPrice) AS 'Total Revenue', COUNT(*) AS 'Item Count'
+  FROM items
+  JOIN order_items ON items.Id = order_items.ItemId
+  JOIN orders ON order_items.OrderId = orders.Id
+  WHERE items.Id = ?
+  GROUP BY STRFTIME('%Y-%m', orders.OrderAt)
+  ORDER BY Month
+  `;
+
+  db.all(selectQuery, itemId, (err, row) => {
+    if (err) {
+      // 에러 처리
+    } else {
+      res.status(200).json(row);
+    }
+  });
+});
+
+app.get("/store/:storeId", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "store_detail.html"));
 });
 
 app.listen(PORT, () => {

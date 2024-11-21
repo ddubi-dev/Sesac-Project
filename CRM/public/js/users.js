@@ -4,9 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("submit").addEventListener("click", () => {
     const name = document.getElementById("inputName").value;
     const gender = document.getElementById("gender").value;
-    // "", female, male
 
-    console.log("name: ", name, "gender: ", gender);
     fetchUser(name, gender, 1);
   });
 });
@@ -60,14 +58,14 @@ async function fetchUser(name, gender, currentPage) {
     for (const [key, value] of Object.entries(row)) {
       if (key !== "Address") {
         const td = document.createElement("td");
-        td.textContent = value;
-        bodyRow.appendChild(td);
+
         if (key == "Id") {
-          // html a 태그 설정
-          //   td.addEventListener("click", () => {
-          //     window.location = `/user/${row.Id}`;
-          //   });
+          td.innerHTML = `<a href=./user_detail/${row.Id}>${value}</a>`;
+        } else {
+          td.textContent = value;
         }
+
+        bodyRow.appendChild(td);
       }
     }
     tableBody.appendChild(bodyRow);
