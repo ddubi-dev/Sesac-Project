@@ -8,14 +8,17 @@ function fetchUser(name, currentPage) {
       if (!response.ok) {
         // 에러
         console.log("fetch에서 에러 발생");
+        return;
       } else {
         return response.json();
       }
     })
     .then((data) => {
-      console.log("data: ", JSON.stringify(data));
+      //   console.log("data: ", JSON.stringify(data));
       const tableHeader = document.getElementById("table-header");
+      tableHeader.innerHTML = ``;
       const tableBody = document.getElementById("table-body");
+      tableBody.innerHTML = ``;
 
       // 헤더 그리기
       const headerRow = document.createElement("tr");
@@ -36,7 +39,6 @@ function fetchUser(name, currentPage) {
       tableHeader.appendChild(headerRow);
 
       // body 그리기
-
       data.result.forEach((row) => {
         const bodyRow = document.createElement("tr");
 
@@ -55,5 +57,38 @@ function fetchUser(name, currentPage) {
         }
         tableBody.appendChild(bodyRow);
       });
+
+      // pagination
+      const currentPage = parseInt(data.currentPage);
+      const totalPage = parseInt(data.totalPage);
+      displayPagination(name, currentPage, totalPage);
     });
+}
+
+function displayPagination(name, currentPage, totalPage) {
+  const pagination = document.getElementById("pagination");
+  pagination.innerHTML = ``;
+
+  // 이전 버튼
+  const prevButton = document.createElement("button");
+  prevButton.textContent = "이전";
+  if (currentPage > 1) {
+    prevButton.onclick = () => fetchUser(name, currentPage - 1);
+  }
+  pagination.appendChild(prevButton);
+
+  // 내용
+  const pageInfo = document.createElement("span");
+  pageInfo.textContent = `${currentPage} / ${totalPage}`;
+  pagination.appendChild(pageInfo);
+
+  // 다음 버튼
+  const nextButton = document.createElement("button");
+  nextButton.textContent = "다음";
+  if (currentPage < totalPage) {
+    nextButton.onclick = () => {
+      fetchUser(name, currentPage + 1);
+    };
+  }
+  pagination.appendChild(nextButton);
 }
