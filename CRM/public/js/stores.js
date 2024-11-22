@@ -22,15 +22,7 @@ async function fetchStore(page) {
   fields.forEach((field) => {
     const th = document.createElement("th");
 
-    if (field == "Id") {
-      th.textContent = "id";
-    } else if (field == "Name") {
-      th.textContent = "name";
-    } else if (field == "Type") {
-      th.textContent = "type";
-    } else if (field == "Address") {
-      th.textContent = "address";
-    }
+    th.textContent = field;
 
     headerRow.appendChild(th);
   });
@@ -46,12 +38,13 @@ async function fetchStore(page) {
 
     for (const [key, value] of Object.entries(row)) {
       const td = document.createElement("td");
-      td.textContent = value;
-      bodyRow.appendChild(td);
 
-      if (key == "Id") {
-        // a 태그 설정
+      if (key == "id") {
+        td.innerHTML = `<a href="/store/${value}">${value}</a>`;
+      } else {
+        td.textContent = value;
       }
+      bodyRow.appendChild(td);
     }
 
     tableBody.appendChild(bodyRow);

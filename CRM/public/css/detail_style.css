@@ -1,0 +1,77 @@
+nav {
+  height: 50px;
+  background-color: gray;
+}
+
+nav {
+  background-color: #333;
+  overflow: hidden;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: lightseagreen; /* 링크 색상은 부모 요소에 따라 */
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+nav li {
+  float: left;
+}
+
+nav a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+}
+
+nav a:hover {
+  text-decoration: none;
+  background-color: #ddd;
+  color: black;
+}
+
+.table-container {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  position: sticky;
+  /* 헤더 고정 */
+  top: 20;
+  /* 헤더 고정 위치 설정 */
+  background-color: #f9f9f9;
+  /* 고정 헤더 배경색 */
+  z-index: 1;
+  /* 헤더가 본문 위에 표시되도록 */
+
+  height: 25px;
+  text-align: center;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  padding: 2px;
+}
+
+th {
+  background-color: lightblue;
+}

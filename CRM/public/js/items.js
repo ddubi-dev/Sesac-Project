@@ -23,15 +23,7 @@ async function fetchStore(page) {
   fields.forEach((field) => {
     const th = document.createElement("th");
 
-    if (field == "Id") {
-      th.textContent = "id";
-    } else if (field == "Name") {
-      th.textContent = "name";
-    } else if (field == "Type") {
-      th.textContent = "type";
-    } else if (field == "UnitPrice") {
-      th.textContent = "unit_price";
-    }
+    th.textContent = field;
 
     headerRow.appendChild(th);
   });
@@ -47,7 +39,11 @@ async function fetchStore(page) {
 
     for (const [key, value] of Object.entries(row)) {
       const td = document.createElement("td");
-      td.textContent = value;
+      if (key == "id") {
+        td.innerHTML = `<a href='/item/${value}'>${value}</a>`;
+      } else {
+        td.textContent = value;
+      }
       bodyRow.appendChild(td);
 
       if (key == "Id") {

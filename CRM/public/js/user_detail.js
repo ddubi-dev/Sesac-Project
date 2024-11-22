@@ -88,7 +88,7 @@ async function fetchOrderDetail(userId) {
       if (key == "order id") {
         td.innerHTML = `<a href=/orderItem/${value}>${value}</a>`;
       } else if (key == "purchased location") {
-        td.innerHTML = `<a href=/location/${value}>${value}</a>`;
+        td.innerHTML = `<a href="/store/${value}">${value}</a>`;
       } else {
         td.textContent = value;
       }

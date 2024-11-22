@@ -22,17 +22,7 @@ async function fetchItems(page) {
   const fields = Object.keys(data.result[0]);
   fields.forEach((field) => {
     const th = document.createElement("th");
-
-    if (field == "Id") {
-      th.textContent = "id";
-    } else if (field == "OrderAt") {
-      th.textContent = "order_at";
-    } else if (field == "StoreId") {
-      th.textContent = "store_id";
-    } else if (field == "UserId") {
-      th.textContent = "user_id";
-    }
-
+    th.textContent = field;
     headerRow.appendChild(th);
   });
 
@@ -47,12 +37,12 @@ async function fetchItems(page) {
 
     for (const [key, value] of Object.entries(row)) {
       const td = document.createElement("td");
-      td.textContent = value;
-      bodyRow.appendChild(td);
-
-      if (key == "Id") {
-        // a 태그 설정
+      if (key == "id") {
+        td.innerHTML = `<a href=/orderItem/${value}>${value}</a>`;
+      } else {
+        td.textContent = value;
       }
+      bodyRow.appendChild(td);
     }
 
     tableBody.appendChild(bodyRow);

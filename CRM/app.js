@@ -121,7 +121,11 @@ app.get("/api/orders", (req, res) => {
     } else {
       const totalPage = Math.ceil(row.count / itemsPerPage);
 
-      const selectQuery = `SELECT * FROM orders LIMIT ? OFFSET ?`;
+      const selectQuery = `
+      SELECT Id AS id, OrderAt AS order_at, StoreId AS store_id, UserId AS user_id
+      FROM orders 
+      LIMIT ? 
+      OFFSET ?`;
       // if (field == "Id") {
       //   th.textContent = "id";
       // } else if (field == "OrderAt") {
@@ -158,7 +162,9 @@ app.get("/api/orderItems", (req, res) => {
     } else {
       const totalPage = Math.ceil(row.count / itemsPerPage);
 
-      const selectQuery = `SELECT * FROM order_items LIMIT ? OFFSET ?`;
+      const selectQuery = `SELECT Id AS id, OrderId AS order_id, ItemId AS item_id
+      FROM order_items 
+      LIMIT ? OFFSET ?`;
 
       db.all(selectQuery, [itemsPerPage, offset], (err, rows) => {
         if (err) {
@@ -186,7 +192,11 @@ app.get("/api/items", (req, res) => {
     } else {
       const totalPage = Math.ceil(row.count / itemsPerPage);
 
-      const selectQuery = `SELECT * FROM items LIMIT ? OFFSET ?`;
+      const selectQuery = `
+      SELECT Id AS id, Type AS type, Name as name, UnitPrice AS unit_price
+      FROM items 
+      LIMIT ? 
+      OFFSET ?`;
 
       db.all(selectQuery, [itemsPerPage, offset], (err, rows) => {
         if (err) {
@@ -214,7 +224,11 @@ app.get("/api/stores", (req, res) => {
     } else {
       const totalPage = Math.ceil(row.count / itemsPerPage);
 
-      const selectQuery = `SELECT * FROM stores LIMIT ? OFFSET ?`;
+      const selectQuery = `
+      SELECT Id AS id, Type AS type, Name AS name, Address AS address
+      FROM stores 
+      LIMIT ? 
+      OFFSET ?`;
 
       db.all(selectQuery, [itemsPerPage, offset], (err, rows) => {
         if (err) {
@@ -351,6 +365,112 @@ app.get("/api/item/month/:itemId", (req, res) => {
 
 app.get("/store/:storeId", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "store_detail.html"));
+});
+
+app.get("/api/store/:storeId", (req, res) => {
+  const storeId = req.params.storeId;
+
+  const selectQuery = `
+  SELECT Name AS name, Type AS type, Address AS address
+  FROM stores
+  WHERE Id = ?
+  `;
+
+  db.get(selectQuery, storeId, (err, row) => {
+    if (err) {
+      // 에러 처리
+    } else {
+      res.status(200).json(row);
+    }
+  });
+});
+
+// store_detail.js 월별 상세 정보
+app.get("/api/store/month/:storeId", (req, res) => {
+  const storeId = req.params.storeId;
+  const selectQuery = `
+  SELECT STRFTIME('%Y-%m', orders.OrderAt) AS month, SUM(items.UnitPrice) AS revenue, COUNT(*) AS count
+  FROM stores
+  JOIN orders ON stores.Id = orders.StoreId
+  JOIN order_items ON orders.Id = order_items.OrderId
+  JOIN items ON order_items.ItemId = items.Id
+  WHERE stores.Id = ?
+  GROUP BY STRFTIME('%Y-%m', orders.OrderAt)
+  ORDER BY month
+  `;
+
+  db.all(selectQuery, storeId, (err, rows) => {
+    if (err) {
+      // 에러 처리
+    } else {
+      res.status(200).json(rows);
+    }
+  });
+});
+
+// store의 월간 매출액 업데이트(상세)
+app.get("/api/store/month/detail/:storeId", (req, res) => {
+  const storeId = req.params.storeId;
+  const date = req.query.date + "%";
+  const selectQuery = `
+  SELECT STRFTIME('%Y-%m-%d', orders.OrderAt) AS month, SUM(items.UnitPrice) AS revenue, COUNT(*) AS count
+  FROM stores
+  JOIN orders ON stores.Id = orders.StoreId
+  JOIN order_items ON orders.Id = order_items.OrderId
+  JOIN items ON order_items.ItemId = items.Id
+  WHERE stores.Id = ? AND orders.OrderAt LIKE ?
+  GROUP BY STRFTIME('%Y-%m-%d', orders.OrderAt)
+  ORDER BY orders.OrderAt
+  `;
+
+  db.all(selectQuery, storeId, date, (err, rows) => {
+    if (err) {
+      //에러 처리
+    } else {
+      res.status(200).json(rows);
+    }
+  });
+});
+
+app.get("/api/store/users/:storeId", (req, res) => {
+  const storeId = req.params.storeId;
+  const selectQuery = `SELECT users.Id AS user_id, users.Name AS name , COUNT(*) AS frequency
+  FROM stores
+  JOIN orders ON stores.Id = orders.StoreId
+  JOIN users ON orders.UserId = users.Id
+  WHERE stores.Id = ?
+  GROUP BY orders.UserId
+  ORDER BY frequency desc
+  `;
+
+  db.all(selectQuery, storeId, (err, rows) => {
+    if (err) {
+      // 에러 처리
+    } else {
+      res.status(200).json(rows);
+    }
+  });
+});
+
+app.get("/api/store/users/detail/:storeId", (req, res) => {
+  const storeId = req.params.storeId;
+  const date = req.query.date + "%";
+  const selectQuery = `SELECT users.Id AS user_id, users.Name AS name , COUNT(*) AS frequency
+  FROM stores
+  JOIN orders ON stores.Id = orders.StoreId
+  JOIN users ON orders.UserId = users.Id
+  WHERE stores.Id = ? AND orders.OrderAt LIKE ?
+  GROUP BY  users.Id
+  ORDER BY frequency desc
+  `;
+
+  db.all(selectQuery, storeId, date, (err, rows) => {
+    if (err) {
+      // 에러 처리
+    } else {
+      res.status(200).json(rows);
+    }
+  });
 });
 
 app.listen(PORT, () => {

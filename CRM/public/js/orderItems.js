@@ -23,13 +23,7 @@ async function fetchItems(page) {
   fields.forEach((field) => {
     const th = document.createElement("th");
 
-    if (field == "Id") {
-      th.textContent = "id";
-    } else if (field == "OrderId") {
-      th.textContent = "order_id";
-    } else if (field == "ItemId") {
-      th.textContent = "item_id";
-    }
+    th.textContent = field;
 
     headerRow.appendChild(th);
   });
@@ -45,12 +39,15 @@ async function fetchItems(page) {
 
     for (const [key, value] of Object.entries(row)) {
       const td = document.createElement("td");
-      td.textContent = value;
-      bodyRow.appendChild(td);
 
-      if (key == "Id") {
-        // a 태그 설정
+      if (key == "order_id") {
+        td.innerHTML = `<a href='/order/${value}'>${value}</a>`;
+      } else if (key == "item_id") {
+        td.innerHTML = `<a href='/item/${value}'>${value}</a>`;
+      } else {
+        td.textContent = value;
       }
+      bodyRow.appendChild(td);
     }
 
     tableBody.appendChild(bodyRow);
