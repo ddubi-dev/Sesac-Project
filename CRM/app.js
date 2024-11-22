@@ -252,7 +252,9 @@ app.get("/user/:id", (req, res) => {
 
 app.get("/api/user/:id", (req, res) => {
   const userId = req.params.id;
-  const selectQuery = `SELECT * FROM users WHERE Id = ?`;
+  const selectQuery = `SELECT Name AS name, Gender AS gender, Age AS age, Birthdate AS birthday, Address AS address
+  FROM users 
+  WHERE Id = ?`;
 
   db.get(selectQuery, userId, (err, row) => {
     if (err) {
@@ -276,6 +278,52 @@ app.get("/api/user/:id/orderInfo", (req, res) => {
       //에러 처리
     } else {
       console.log("rows: ", rows);
+      res.status(200).json(rows);
+    }
+  });
+});
+
+app.get("/api/user/store/:userId", (req, res) => {
+  const userId = req.params.userId;
+  const selectQuery = `
+  SELECT stores.Name AS name, COUNT(*) AS count
+  FROM users
+  JOIN orders ON users.Id = orders.UserId
+  JOIN stores ON orders.StoreId = stores.Id
+  WHERE users.Id = ?
+  GROUP BY stores.Id
+  ORDER BY count desc
+  LIMIT 5
+  `;
+
+  db.all(selectQuery, userId, (err, rows) => {
+    if (err) {
+      // 에러 처리
+    } else {
+      res.status(200).json(rows);
+    }
+  });
+});
+
+// 자주 주문한 메뉴
+app.get("/api/user/item/:userId", (req, res) => {
+  const userId = req.params.userId;
+  const selectQuery = `
+  SELECT items.Name AS name, COUNT(*) AS count
+  FROM users
+  JOIN orders ON users.Id = orders.UserId
+  JOIN order_items ON orders.Id = order_items.OrderId
+  JOIN items ON order_items.ItemId = items.Id
+  WHERE users.Id = ?
+  GROUP BY items.Id
+  ORDER BY count desc
+  LIMIT 5
+  `;
+
+  db.all(selectQuery, userId, (err, rows) => {
+    if (err) {
+      // 에러 처리
+    } else {
       res.status(200).json(rows);
     }
   });

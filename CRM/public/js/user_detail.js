@@ -6,6 +6,8 @@ const userId = window.location.pathname.split("/").pop();
 
 fetchUserDetail(userId);
 fetchOrderDetail(userId);
+fetchStoreTop5(userId);
+fetchItemTop5(userId);
 
 async function fetchUserDetail(userId) {
   const response = await fetch(`/api/user/${userId}`);
@@ -23,21 +25,10 @@ async function fetchUserDetail(userId) {
   const fields = Object.keys(data);
   const headerRow = document.createElement("tr");
   fields.forEach((field) => {
-    if (field !== "Id") {
-      const th = document.createElement("th");
-      if (field == "Name") {
-        th.textContent = "name";
-      } else if (field == "Gender") {
-        th.textContent = "gender";
-      } else if (field == "Age") {
-        th.textContent = "age";
-      } else if (field == "Birthdate") {
-        th.textContent = "birthday";
-      } else if (field == "Address") {
-        th.textContent = "address";
-      }
-      headerRow.appendChild(th);
-    }
+    const th = document.createElement("th");
+    th.textContent = field;
+
+    headerRow.appendChild(th);
   });
   tableHeader.appendChild(headerRow);
 
@@ -45,11 +36,9 @@ async function fetchUserDetail(userId) {
   const tableBody = document.querySelector("#userTable tbody");
   const bodyRow = document.createElement("tr");
   for (const [key, value] of Object.entries(data)) {
-    if (key !== "Id") {
-      const td = document.createElement("td");
-      td.textContent = value;
-      bodyRow.appendChild(td);
-    }
+    const td = document.createElement("td");
+    td.textContent = value;
+    bodyRow.appendChild(td);
   }
   tableBody.appendChild(bodyRow);
 }
@@ -95,5 +84,35 @@ async function fetchOrderDetail(userId) {
       bodyRow.appendChild(td);
     }
     tableBody.appendChild(bodyRow);
+  });
+}
+
+async function fetchStoreTop5(userId) {
+  const response = await fetch(`/api/user/store/${userId}`);
+  if (!response.ok) {
+    // 에러 처리
+    return;
+  }
+  const data = await response.json();
+  const ul = document.getElementById("visitTop5");
+  data.forEach((row) => {
+    const li = document.createElement("li");
+    li.textContent = `${row.name} (${row.count}번 방문)`;
+    ul.appendChild(li);
+  });
+}
+
+async function fetchItemTop5(userId) {
+  const response = await fetch(`/api/user/item/${userId}`);
+  if (!response.ok) {
+    // 에러 처리
+    return;
+  }
+  const data = await response.json();
+  const ul = document.getElementById("orderTop5");
+  data.forEach((row) => {
+    const li = document.createElement("li");
+    li.textContent = `${row.name} (${row.count}번 주문)`;
+    ul.appendChild(li);
   });
 }
