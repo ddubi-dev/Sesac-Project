@@ -488,7 +488,8 @@ app.get("/api/store/users/:storeId", (req, res) => {
   JOIN users ON orders.UserId = users.Id
   WHERE stores.Id = ?
   GROUP BY orders.UserId
-  ORDER BY frequency desc
+  ORDER BY frequency desc, users.Id
+  LIMIT 10
   `;
 
   db.all(selectQuery, storeId, (err, rows) => {
@@ -509,7 +510,8 @@ app.get("/api/store/users/detail/:storeId", (req, res) => {
   JOIN users ON orders.UserId = users.Id
   WHERE stores.Id = ? AND orders.OrderAt LIKE ?
   GROUP BY  users.Id
-  ORDER BY frequency desc
+  ORDER BY frequency desc,  users.Id
+  LIMIT 10
   `;
 
   db.all(selectQuery, storeId, date, (err, rows) => {
