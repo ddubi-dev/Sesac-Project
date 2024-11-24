@@ -91,9 +91,11 @@ async function drawGraph(data) {
   const revenue = data.map((d) => d["Total Revenue"]);
   const count = data.map((d) => d["Item Count"]);
 
-  console.log("labels: ", labels);
-  console.log("revenue: ", revenue);
-  console.log("count: ", count);
+  // 최소, 최대
+  const minValueR = Math.floor(Math.min(...revenue) / 10000) * 10000;
+  const maxValueR = Math.max(...revenue);
+  const minValueC = Math.floor(Math.min(...count) / 10) * 10;
+  const maxValueC = Math.max(...count);
 
   const chart = document.getElementById("chart").getContext("2d");
   new Chart(chart, {
@@ -125,6 +127,7 @@ async function drawGraph(data) {
       responsive: true,
       scales: {
         y: {
+          // min: minValueR,
           type: "linear",
           position: "left",
           title: {
@@ -133,6 +136,7 @@ async function drawGraph(data) {
           },
         },
         y1: {
+          // min: minValueC,
           type: "linear",
           position: "right",
           title: {
