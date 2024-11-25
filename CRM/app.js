@@ -63,7 +63,6 @@ app.get("/api/users", (req, res) => {
     }
   }
 
-  // 동기화 처리
   db.get(countSql, queryParams, (err, row) => {
     if (err) {
       // 에러 처리
@@ -126,15 +125,6 @@ app.get("/api/orders", (req, res) => {
       FROM orders 
       LIMIT ? 
       OFFSET ?`;
-      // if (field == "Id") {
-      //   th.textContent = "id";
-      // } else if (field == "OrderAt") {
-      //   th.textContent = "order_at";
-      // } else if (field == "StoreId") {
-      //   th.textContent = "store_id";
-      // } else if (field == "UserId") {
-      //   th.textContent = "user_id";
-      // }
 
       db.all(selectQuery, [itemsPerPage, offset], (err, rows) => {
         if (err) {
@@ -181,8 +171,7 @@ app.get("/api/items", (req, res) => {
   // pagination
   const { page = 1 } = req.query;
   const itemsPerPage = 20;
-  const offset = (page - 1) * itemsPerPage; // 0:0~19, 1:20~39, ...
-  let countSql = 0;
+  const offset = (page - 1) * itemsPerPage;
 
   const countQuery = `SELECT COUNT(*) AS count FROM items`;
 
@@ -213,7 +202,7 @@ app.get("/api/stores", (req, res) => {
   // pagination
   const { page = 1 } = req.query;
   const itemsPerPage = 20;
-  const offset = (page - 1) * itemsPerPage; // 0:0~19, 1:20~39, ...
+  const offset = (page - 1) * itemsPerPage;
   let countSql = 0;
 
   const countQuery = `SELECT COUNT(*) AS count FROM stores`;
@@ -348,11 +337,6 @@ app.get("/api/orderItem/:orderId", (req, res) => {
       res.status(200).json(rows);
     }
   });
-
-  // order_items.Id AS "id"
-  // order_items.OrderId AS "order_id"
-  // order_items.ItemId AS "item_id"
-  // items.Name AS "item_name"
 });
 
 app.get("/order/:orderId", (req, res) => {
@@ -391,7 +375,6 @@ app.get("/api/item/:itemId", (req, res) => {
 });
 
 app.get("/api/item/month/:itemId", (req, res) => {
-  console.log("여기야");
   const itemId = req.params.itemId;
   const selectQuery = `SELECT STRFTIME('%Y-%m', orders.OrderAt) AS Month, SUM(items.UnitPrice) AS 'Total Revenue', COUNT(*) AS 'Item Count'
   FROM items
