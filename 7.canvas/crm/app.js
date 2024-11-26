@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
         JOIN 
             items ON order_items.ItemId = items.Id
         WHERE 
-            orders.OrderAt >= date('now', '-2 year')
+            orders.OrderAt >= '2023-01-01' AND orders.OrderAt <= '2023-12-31'
         GROUP BY 
             strftime('%Y-%m', orders.OrderAt)
         ORDER BY 
@@ -46,10 +46,28 @@ app.get("/", (req, res) => {
         console.error("쿼리 실패");
       } else {
         // console.log(rows);
-        res.render("monthly_revenue", { rows });
+        const labels = rows.map((row) => row.YearMonth);
+        const revenues = rows.map((row) => row.MonthlyRevenue);
+        // console.log(JSON.stringify(labels));
+        // console.log(JSON.stringify(revenues));
+
+        res.render("monthly_revenue", {
+          rows,
+          labels: JSON.stringify(labels),
+          revenues: JSON.stringify(revenues),
+        });
       }
     }
   );
+
+  // 데이터베이스 연결 닫기
+  db.close((err) => {
+    if (err) {
+      console.error("DB닫기 실패: ", err.message);
+    } else {
+      console.log("DB 닫기 성공");
+    }
+  });
 });
 
 app.listen(port, () => {
