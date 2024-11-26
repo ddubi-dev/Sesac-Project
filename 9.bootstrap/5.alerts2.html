@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <title>Bootstrap alert</title>
+    <!-- <style>
+      .fade {
+        transition: opacity 2.5s ease-in-out;
+      }
+    </style> -->
+  </head>
+  <body>
+    <div id="alert1" class="alert alert-warning alert-dismissible fade show" role="alert">
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>
+      <!-- me = margin-end -->
+      이것은 경고 메시지 입니다.
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      <!-- bootstrap 4.X는 data-dismiss, bootstrap 4.X는  data-bs-dismiss로 바뀜 -->
+    </div>
+
+    <div id="alert2" class="alert alert-danger alert-dismissible fade show" role="alert">
+      <i class="bi bi-x-circle-fill me-2"></i>
+      치명적인 오류가 발생했습니다
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div id="alert3" class="alert alert-info alert-dismissible fade show" role="alert">
+      자세한 내용을 보시려면 <a href="#" class="alert-link">여기</a>를 클릭하세요.
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <script>
+      setTimeout(() => {
+        const alert1 = document.getElementById("alert1");
+        alert1.remove();
+      }, 3000);
+
+      setTimeout(() => {
+        const alert2 = document.getElementById("alert2");
+        alert2.remove();
+      }, 4000);
+
+      setTimeout(() => {
+        const alert3 = document.getElementById("alert3");
+        alert3.remove();
+      }, 5000);
+    </script>
+    <!-- css를 적용할 때(cascading 될 때), 구체적일수록 먼저 적용됨 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  </body>
+</html>
