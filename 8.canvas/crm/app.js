@@ -27,7 +27,8 @@ app.get("/", (req, res) => {
   db.all(
     `SELECT 
             strftime('%Y-%m', orders.OrderAt) AS YearMonth,
-            SUM(items.UnitPrice) AS MonthlyRevenue
+            SUM(items.UnitPrice) AS MonthlyRevenue, 
+            COUNT(order_items.ItemId) AS ItemCount
         FROM 
             orders
         JOIN 
@@ -57,6 +58,12 @@ app.get("/", (req, res) => {
           revenues: JSON.stringify(revenues),
         });
       }
+
+      // REST-API =>
+      // 프론트엔드에서 1. 캔바스 크리기 2. 캔바스에 데이터를 넣고 바 그래프를 그린다 3. 넣을 데이터는? => 요청(fetch(), GET)
+      // fetch(GET --->)
+      //             <--- 응답의 형태, 데이터 포맷, JSON
+      // 백엔드에서
     }
   );
 
