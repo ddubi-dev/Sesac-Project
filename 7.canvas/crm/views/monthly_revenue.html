@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>월간 매출액</h1>
+    <table>
+      <tr>
+        <th>년-월</th>
+        <th>해당월 매출액</th>
+      </tr>
+      {% for row in rows %}
+      <tr>
+        <td>{{ row.YearMonth }}</td>
+        <td>{{ row.MonthlyRevenue }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
