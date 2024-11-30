@@ -9,90 +9,93 @@
   <body>
     <h2>월간 매출액</h2>
     <canvas id="revenueChart"></canvas>
+
+    <h2>고객 성별 분포도</h2>
     <canvas id="genderChart"></canvas>
-    <canvas id="genderChart2"></canvas>
 
     <script>
-        // 차트에 입력할 데이터를 백엔드에 요청한다
-        // 우리가 받은 포맷 : revenue, monthrevenue(JSON)
-        // chartJS 가 원하는 포맷: labels, data(LIST)
+      // 차트에 입력할 데이터를 백엔드에 요청한다
+      // 우리가 받은 포맷 : revenue, monthrevenue(JSON)
+      // chartJS 가 원하는 포맷: labels, data(LIST)
 
-        fetchRevenue();
-        fetchGender('genderChart');
-        fetchGender2();
+      fetchRevenue();
+      // fetchGender("genderChart");
 
-        function fetchRevenue() {
-          fetch("/revenue_data")
-            .then((response) => response.json())
-            .then((data) => {
-              console.log(data);
+      function fetchRevenue() {
+        fetch("/revenue_data")
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
 
-              const ctx = document.getElementById("revenueChart").getContext("2d");
-              const revenueChart = new Chart(ctx, {
-                type: "bar",
-                data: {
-                  // labels: [x축의 데이터]
-                  labels: data.labels,
-                  datasets: [
-                    {
-                      // label: [y축의 데이터]
-                      label: "월간 매출액",
-                      data: data.revenues,
-                    },
-                  ],
-                },
-                options: {},
-              });
+            const ctx = document.getElementById("revenueChart").getContext("2d");
+            const revenueChart = new Chart(ctx, {
+              type: "bar",
+              data: {
+                // labels: [x축의 데이터]
+                labels: data.labels,
+                datasets: [
+                  {
+                    // label: [y축의 데이터]
+                    label: "월간 매출액",
+                    data: data.revenues,
+                  },
+                ],
+              },
+              options: {},
             });
-        }
+          });
+      }
+
+      // function fetchGender(chart) {
+      //   fetch("/gender_dist_data")
+      //     .then((response) => response.json())
+      //     .then((data) => {
+      //       console.log(data);
+
+      //       const ctx = document.getElementById(`${chart}`).getContext("2d");
+      //       const revenueChart = new Chart(ctx, {
+      //         type: "bar",
+      //         data: {
+      //           // labels: [x축의 데이터]
+      //           labels: data.labels,
+      //           datasets: [
+      //             {
+      //               // label: [y축의 데이터]
+      //               label: "월간 매출액",
+      //               data: data.revenues,
+      //             },
+      //           ],
+      //         },
+      //         options: {},
+      //       });
+      //     });
+      // }
 
       //   function fetchGender() {
-          fetch("gender_dist_data")
-            .then((response) => response.json())
-            .then((data) => {
-              console.log("data: ", data);
+      fetch("/gender_dist_data")
+        .then((response) => response.json())
+        .then((data) => {
+          // console.log("data: ", data);
 
-              const ctx = document.getElementById("ageChart").getContext("2d");
-              const ageChart = new Chart(ctx, {
-                type: "bar",
-                data: {
-                  labels: data.labels,
-                  datasets: [
-                    {
-                      label: "인원 수",
-                      data: count,
-                    },
-                  ],
+          const ctx = document.getElementById("genderChart").getContext("2d");
+          const genderChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+              labels: data.labels,
+              datasets: [
+                {
+                  label: "남성 연령대별 숫자",
+                  data: data.maleCount,
                 },
-                options: {},
-              });
-            });
-        }
-
-        function fetchGender(chart) {
-          fetch("/gender_dist_data")
-            .then((response) => response.json())
-            .then((data) => {
-              console.log(data);
-
-              const ctx = document.getElementById(`${chart}`).getContext("2d");
-              const revenueChart = new Chart(ctx, {
-                type: "bar",
-                data: {
-                  // labels: [x축의 데이터]
-                  labels: data.labels,
-                  datasets: [
-                    {
-                      // label: [y축의 데이터]
-                      label: "월간 매출액",
-                      data: data.revenues,
-                    },
-                  ],
+                {
+                  label: "여성 연령대별 숫자",
+                  data: data.femaleCount,
                 },
-                options: {},
-              });
-            });
-        }
+              ],
+            },
+            options: {},
+          });
+        });
     </script>
   </body>
 </html>

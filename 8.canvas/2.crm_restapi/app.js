@@ -19,7 +19,19 @@ app.get("/gender_dist_data", (req, res) => {
   // 4. 요청 후
 
   // 1. age BETWEEN 10 AND 19
-  // const selectQuery = ``;
+  // const selectQuery = `SELECT
+  //         CASE
+  //         WHEN Age BETWEEN 10 AND 19 THEN '10대'
+  //         WHEN Age BETWEEN 20 AND 29 THEN '20대'
+  //         WHEN Age BETWEEN 30 AND 39 THEN '30대'
+  //         WHEN Age BETWEEN 40 AND 49 THEN '40대'
+  //         WHEN Age BETWEEN 50 AND 59 THEN '50대'
+  //         WHEN Age >= 60 THEN '60대이상'
+  //     END AS AgeGroup,
+  //     Gender,
+  //     COUNT(*) AS UserCount
+  // FROM users
+  // GROUP BY AgeGroup, Gender;`;
 
   // 2. AGE / 10 * 10
   const selectQuery = `
@@ -32,21 +44,31 @@ app.get("/gender_dist_data", (req, res) => {
     if (err) {
       console.error("쿼리 실패");
     } else {
-      console.log(rows);
-      const labels = [];
-      const count = [];
+      // console.log(rows);
+      const labelSet = new Set();
+      const maleCount = [];
+      const femaleCount = [];
 
       for (const row of rows) {
-        labels.push(row.AgeGroup + "대 " + row.Gender);
-        count.push(row.UserCount);
+        labelSet.add(row.AgeGroup + "대 ");
+
+        if (row.Gender == "Male") {
+          maleCount.push(row.UserCount);
+        } else {
+          femaleCount.push(row.UserCount);
+        }
       }
+
+      const labels = Array.from(labelSet); // set을 배열로 변환
 
       const chartData = {
         labels: labels,
-        count: count,
+        maleCount: maleCount,
+        femaleCount: femaleCount,
       };
 
       console.log(chartData);
+      res.status(200).json(chartData);
     }
   });
 });
