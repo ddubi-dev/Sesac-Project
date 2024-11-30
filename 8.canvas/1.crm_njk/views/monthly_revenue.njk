@@ -30,7 +30,7 @@
     <table>
         <tr>
             <th>년-월</th>
-            <th>해당월 매출액</th>
+            <th>해당 월 매출액</th>
         </tr>
         {% for row in rows %}
         <tr>
@@ -40,17 +40,21 @@
         {% endfor %}
     </table>
 
-    <canvas id="chart"></canvas>
+    <canvas id="chart1"></canvas>
+    <canvas id="chart2"></canvas>
+    <canvas id="chart3"></canvas>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
         const labels=[];
         const revenues=[];
+        const counts=[];
 
         {% for row in rows %}
             labels.push('{{row.YearMonth}}');
             revenues.push('{{row.MonthlyRevenue}}');
-
+            counts.push('{{row.ItemCount}}');
         {% endfor %}
 
 
@@ -83,7 +87,8 @@
         {# console.log(labels);
         console.log(revenues); #}
 
-        const ctx = document.getElementById('chart').getContext('2d');
+        // 월간 매출액
+        const ctx = document.getElementById('chart1').getContext('2d');
         new Chart(ctx, {
             type: 'bar',
             data: {
@@ -96,9 +101,68 @@
                 }]
             },
             options: {
-
             }
         });
+
+        // 아이템 판매 개수
+        const ctx2 = document.getElementById('chart2').getContext('2d');
+        new Chart(ctx2, {
+            type: "line",
+            data:{
+                labels: labels,
+                datasets: [{
+                    label: 'Item Count',
+                    data: counts
+                }]
+            },
+            options:{
+            }
+        
+        });
+
+        // 월간매출액 + 아이템 판매 개수
+        const ctx3 = document.getElementById('chart3').getContext('2d');
+        new Chart(ctx3, {
+            data:{
+                datasets:[{
+                    type: "bar", 
+                    label: "Monthly Revenue",
+                    data: revenues,
+                    yAxisID: "y",
+                    order:1
+                }, {
+                    type: "line",
+                    label: "Item Count",
+                    data: counts,
+                    yAxisID: "y1",
+                    order:0
+                }],
+                labels: labels
+            },
+            options:{
+                responsive: true,
+                scales:{
+                    y:{
+                        type: "linear",
+                        position: "left",
+                        {# min: 6000000,
+                        max: 12000000, #}
+                    },
+
+                    y1:{
+                        type: "linear",
+                        position: "right",
+                        {# min: 2000,
+                        max: 3000, #}
+                    }
+                
+                }
+            }
+        });
+
+        // 연령대별 분포도
+        
+
     </script>
 </body>
 </html>
