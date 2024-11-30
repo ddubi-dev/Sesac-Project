@@ -11,21 +11,23 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- 라이브러리 불러옴 -->
+    <!-- 라이브러리 불러옴!! -->
 
     <script>
-      const ctx = document.getElementById("myChart");
+      const ctx = document.getElementById("myChart").getContext("2d");
 
       new Chart(ctx, {
         type: "bar", // bar, line, area, pie
         data: {
+          // 여기가 실 데이터..
           labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
           datasets: [
             {
               label: "# of Votes",
-              data: [12, 19, 3, 5, 2, 3],
-              borderWidth: 1,
+              data: [12, 19, 5, 8, 20, 13],
+              borderWidth: 2,
               backgroundColor: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+              // fill: true,
             },
           ],
         },
@@ -36,10 +38,10 @@
             },
           },
           // plugins: {
-          //   filler: {
-          //     propagate: true,
-          //   },
-          // },
+          //     filler: {
+          //         propagate: true,
+          //     }
+          // }
         },
       });
     </script>
