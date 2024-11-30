@@ -11,7 +11,20 @@
     <canvas id="revenueChart"></canvas>
 
     <h2>고객 성별 분포도</h2>
-    <canvas id="genderChart"></canvas>
+    <div>
+      <h3>Grouped Bar Chart</h3>
+      <canvas id="genderChart"></canvas>
+    </div>
+
+    <div>
+      <h3>Stacked Bar Chart</h3>
+      <canvas id="genderChart2"></canvas>
+    </div>
+
+    <div>
+      <h3>Gender Distribution by Age Group</h3>
+      <canvas id="genderChart3"></canvas>
+    </div>
 
     <script>
       // 차트에 입력할 데이터를 백엔드에 요청한다
@@ -19,7 +32,6 @@
       // chartJS 가 원하는 포맷: labels, data(LIST)
 
       fetchRevenue();
-      // fetchGender("genderChart");
 
       function fetchRevenue() {
         fetch("/revenue_data")
@@ -46,37 +58,10 @@
           });
       }
 
-      // function fetchGender(chart) {
-      //   fetch("/gender_dist_data")
-      //     .then((response) => response.json())
-      //     .then((data) => {
-      //       console.log(data);
-
-      //       const ctx = document.getElementById(`${chart}`).getContext("2d");
-      //       const revenueChart = new Chart(ctx, {
-      //         type: "bar",
-      //         data: {
-      //           // labels: [x축의 데이터]
-      //           labels: data.labels,
-      //           datasets: [
-      //             {
-      //               // label: [y축의 데이터]
-      //               label: "월간 매출액",
-      //               data: data.revenues,
-      //             },
-      //           ],
-      //         },
-      //         options: {},
-      //       });
-      //     });
-      // }
-
-      //   function fetchGender() {
       fetch("/gender_dist_data")
         .then((response) => response.json())
         .then((data) => {
-          // console.log("data: ", data);
-
+          // 1. Grouped Bar Chart
           const ctx = document.getElementById("genderChart").getContext("2d");
           const genderChart = new Chart(ctx, {
             type: "bar",
@@ -95,6 +80,10 @@
             },
             options: {},
           });
+
+          // 2. Stacked Bar Chart
+
+          // 3. Gender Distribution by Age Group
         });
     </script>
   </body>
