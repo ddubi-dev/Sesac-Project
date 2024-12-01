@@ -82,8 +82,85 @@
           });
 
           // 2. Stacked Bar Chart
+          const ctx2 = document.getElementById("genderChart2").getContext("2d");
+          const genderChart2 = new Chart(ctx2, {
+            type: "bar",
+            data: {
+              labels: data.labels,
+              datasets: [
+                {
+                  label: "남성 연령대별 숫자",
+                  data: data.maleCount,
+                },
+                {
+                  label: "여성 연령대별 숫자",
+                  data: data.femaleCount,
+                },
+              ],
+            },
+            options: {
+              plugins: {
+                title: {
+                  display: true,
+                  text: "Chart.js Bar Chart - Stacked",
+                },
+              },
+              responsive: true,
+              scales: {
+                x: {
+                  stacked: true,
+                },
+                y: {
+                  stacked: true,
+                },
+              },
+            },
+          });
 
           // 3. Gender Distribution by Age Group
+          const ctx3 = document.getElementById("genderChart3").getContext("2d");
+          new Chart(ctx3, {
+            type: "doughnut",
+            data: {
+              labels: data.labels,
+              datasets: [
+                {
+                  label: "Male",
+                  data: data.maleCount,
+                  backgroundColor: ["rgba(100, 50, 50, 1)", "rgba(100, 100, 100, 1)", "rgba(100, 150, 150, 1)", "rgba(100, 200, 200, 1)", "rgba(100, 220, 220, 1)"],
+                },
+                {
+                  label: "Female",
+                  data: data.femaleCount,
+                  backgroundColor: ["rgba(100, 50, 50, 0.5)", "rgba(100, 100, 100, 0.5)", "rgba(100, 150, 150, 0.5)", "rgba(100, 200, 200, 0.5)", "rgba(100, 220, 220, 0.5)"],
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: "top",
+                },
+                title: {
+                  display: true,
+                  text: "Chart.js Doughnut Chart",
+                },
+
+                tooltip: {
+                  callbacks: {
+                    label: function (tooltipItem) {
+                      const dataset = tooltipItem.dataset.data; // 현재 데이터 셋
+                      const total = dataset.reduce((acc, value) => acc + value, 0); // 총합
+                      const currentValue = dataset[tooltipItem.dataIndex]; // 현재 값
+                      const percentage = ((currentValue / total) * 100).toFixed(2); // 비율 계산
+                      return `${tooltipItem.dataset.label}: ${currentValue} (${percentage}%)`;
+                    },
+                  },
+                },
+              },
+            },
+          });
         });
     </script>
   </body>
