@@ -3,29 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bootstrap Demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- 부트스트랩 CSS 가져온다 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+    <title>Document</title>
   </head>
   <body>
     <div class="container my-4">
       <h2>회원가입</h2>
-      <form id="exampleForm" validate>
+      <form id="exampleForm">
         <!-- ID -->
         <div class="mb-3">
-          <label class="form-label">UserID</label>
+          <label class="form-label">ID</label>
           <div class="input-group">
             <span class="input-group-text"><i class="bi bi-person"></i></span>
-            <input type="text" id="username" name="username" class="form-control" placeholder="닉네임을 입력하세요" required />
+            <input type="text" id="id" name="id" class="form-control" placeholder="아이디 3~10글자로 입력하세요" />
             <div class="invalid-feedback">사용자명은 3글자 이상 10글자 이하로 입력해야 합니다.</div>
           </div>
         </div>
-        <!-- 비밀번호 -->
+        <!-- 비밀번호 입력 -->
         <div class="mb-3">
           <label class="form-label">Password</label>
           <div class="input-group">
             <span class="input-group-text"><i class="bi bi-lock"></i></span>
-            <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호를 입력하세요" required />
+            <input type="password" id="password" name="password" class="form-control" placeholder="암호를 입력하세요" />
+            <div class="invalid-feedback">비밀번호는 대소문자, 숫자 또는 특수문자 중 3가지 이상 조합하여 8자 이상 입력해야 합니다.</div>
           </div>
         </div>
         <!-- 이름 -->
@@ -33,17 +35,20 @@
           <label class="form-label">Name</label>
           <div class="input-group">
             <span class="input-group-text"><i class="bi bi-card-text"></i></span>
-            <input type="text" id="name" name="name" class="form-control" placeholder="이름을 입력하세요" required />
+            <input type="text" id="name" name="name" class="form-control" placeholder="이름을 입력하세요" />
+            <div class="invalid-feedback">이름은 최소 1글자, 최대 10글자까지 입력 가능합니다.</div>
           </div>
         </div>
+
         <!-- 이메일 -->
         <div class="mb-3">
           <label class="form-label">Email</label>
           <div class="input-group">
             <span class="input-group-text"><i class="bi bi-at"></i></span>
-            <input type="email" id="email" name="email" class="form-control" placeholder="이메일 주소를 입력하세요" required />
+            <input type="email" id="email" name="email" class="form-control" placeholder="이메일 주소를 입력하세요" />
           </div>
         </div>
+
         <!-- 생년월일 -->
         <div class="mb-3">
           <label class="form-label">Birthdate</label>
@@ -52,7 +57,17 @@
             <input type="date" class="form-control" />
           </div>
         </div>
-        <!-- 제출 -->
+
+        <div class="mb-3">
+          <label class="form-label">관심 분야 (최소 1개, 최대 3개 선택)</label><br />
+          <input type="checkbox" value="interest1" />관심분야1<br />
+          <input type="checkbox" value="interest2" />관심분야2<br />
+          <input type="checkbox" value="interest3" />관심분야3<br />
+          <input type="checkbox" value="interest4" />관심분야4<br />
+          <input type="checkbox" value="interest5" />관심분야5<br />
+        </div>
+
+        <!-- 제출 버튼 -->
         <button type="submit" class="btn btn-primary">제출</button>
         <button type="reset" class="btn btn-secondary ms-2">초기화</button>
         <!-- margin start -->
@@ -63,16 +78,158 @@
     </div>
 
     <script>
-      document.getElementById("username").addEventListener("blur", () => {
-        const username = document.getElementById("username").value;
-        if (username.length < 3 || username.length > 10) {
+      document.getElementById("id").addEventListener("blur", validateId);
+      document.getElementById("password").addEventListener("blur", validatePassword);
+      document.getElementById("name").addEventListener("blur", validateUsername);
+
+      function validateId() {
+        const id = document.getElementById("id");
+        if (id.value.length < 3 || id.value.length > 10) {
           console.log("유저네임 조건 오류");
-          username.classList.add("is-invalid");
+          id.classList.add("is-invalid");
+          return false;
         } else {
           console.log("유저네임 조건 성공");
-          username.classList.add("is-valid");
+          id.classList.remove("is-invalid");
+          id.classList.add("is-valid");
+          return true;
         }
-      });
+      }
+
+      function validatePassword() {
+        // 대소문자, 숫자, 특수문자 3가지 이상 조합, 8자 이상
+        const password = document.getElementById("password");
+
+        const i = checkChar(password.value);
+
+        if (i >= 3 && password.value.length > 7) {
+          console.log("비밀번호 조건 성공");
+          password.classList.remove("is-invalid");
+          password.classList.add("is-valid");
+          return true;
+        } else {
+          console.log("비밀번호 조건 오류");
+          password.classList.add("is-invalid");
+          return false;
+        }
+      }
+
+      function checkChar(str) {
+        let i = 0;
+        const specialChar = /[^a-zA-Z0-9\s]/; // 정규식
+        const number = /[0-9]/;
+        const upperCase = /[A-Z]/;
+        const lowerCase = /[a-z]/;
+
+        if (specialChar.test(str)) {
+          i++;
+        }
+        if (number.test(str)) {
+          i++;
+        }
+        if (upperCase.test(str)) {
+          i++;
+        }
+        if (lowerCase.test(str)) {
+          i++;
+        }
+
+        return i;
+      }
+
+      function validateUsername() {
+        // 이름은 최소 1글자, 최대 10글자까지 입력 가능
+        const username = document.getElementById("name");
+
+        if (username.value.length > 1 && username.value.length < 11) {
+          username.classList.remove("is-invalid");
+          username.classList.add("is-valid");
+          return true;
+        } else {
+          username.classList.add("is-invalid");
+          return false;
+        }
+      }
+
+      // function validateEmail() {}
+
+      function validateCheckbox() {
+        // 1~3
+        const selected = [];
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        checkboxes.forEach((checkbox) => {
+          selected.push(checkbox);
+        });
+        console.log(selected);
+
+        if (selected.length > 1 && selected.length < 4) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+
+      function showMessage(isSuccess) {
+        const body = document.body;
+
+        const successMessage = document.querySelector(".alert-success");
+        const failMessage = document.querySelector(".alert-danger");
+
+        if (successMessage) {
+          successMessage.remove();
+        }
+
+        if (failMessage) {
+          failMessage.remove();
+        }
+
+        if (isSuccess) {
+          const message = document.createElement("div");
+          message.classList.add("alert", "alert-success");
+          message.setAttribute("role", "alert");
+          message.textContent = "모든 입력이 올바릅니다!";
+          body.appendChild(message);
+        } else {
+          const message = document.createElement("div");
+          message.classList.add("alert", "alert-danger");
+          message.setAttribute("role", "alert");
+          message.textContent = "입력 항목을 확인하세요.";
+          body.appendChild(message);
+        }
+      }
+
+      if (validateId == true && validatePassword == true && validateUsername == true && validateCheckbox == true) {
+        showMessage(true);
+      } else {
+        showMessage(false);
+      }
+
+      // if (validateId == true && validatePassword == true && validateUsername == true && validateCheckbox == true) {
+      //   const success = `<div class="alert alert-success" role="alert">
+      //   모든 입력이 올바릅니다!
+      // </div>`;
+
+      //   const failMessage = document.querySelector(".alert-danger");
+      //   if (failMessage) {
+      //     failMessage.remove();
+      //   }
+      //   document.body.innerHTML += success;
+      // } else {
+      //   const fail = `<div class="alert alert-danger" role="alert">
+      //   입력 항목을 확인하세요.
+      // </div>`;
+
+      //   const successMessage = document.querySelector(".alert-success");
+      //   if (successMessage) {
+      //     successMessage.remove();
+      //   }
+      //   document.body.innerHTML += fail;
+      // }
+
+      // document.body.innerHTML +=를 통해 추가되면서 전체 body의 innerHTML을 다시 설정하고 있기 때문입니다.
+      // 이 방법은 페이지의 기존 콘텐츠를 덮어쓰기 때문에, 기존의 모든 DOM 요소(예: 사용자명 입력 폼의 유효성 메시지 등)가 사라지게 됩니다.
+      // 이 문제를 해결하려면, innerHTML을 직접 수정하는 대신에 새로운 메시지를 동적으로 추가하거나, 기존 메시지를 교체하는 방법을 사용
+      // innerHTML을 사용하면 기존 콘텐츠가 덮어지기 때문에, appendChild 같은 메서드를 사용하여 새로운 요소를 추가하는 방식으로 변경
     </script>
 
     <script>
@@ -81,6 +238,10 @@
 
       form.addEventListener("submit", (e) => {
         e.preventDefault();
+
+        // alert 추가
+        // 입력 항목을 확인하세요
+        // 모든 입력이 올바릅니다!
 
         const formData = new FormData(form);
         const name = formData.get("name");
@@ -99,6 +260,7 @@
       });
     </script>
 
+    <!-- 부스트랩 JS 가져온다 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

@@ -1,41 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
-    <title>Bootstrap button</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 부트스트랩 CSS 가져온다 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <title>Document</title>
   </head>
   <body>
     <div class="container my-4">
       <h2>기본 버튼들</h2>
-      <button type="button" class="btn btn-primary">primary</button>
-      <button type="button" class="btn btn-secondary">secondary</button>
-      <button type="button" class="btn btn-success">success</button>
-      <button type="button" class="btn btn-danger">danger</button>
-      <button type="button" class="btn btn-warning">warning</button>
-      <button type="button" class="btn btn-info">info</button>
-      <button type="button" class="btn btn-light">light</button>
-      <button type="button" class="btn btn-dark">dark</button>
-      <button type="button" class="btn btn-link">link</button>
+      <button type="button" class="btn btn-primary">Primary</button>
+      <button type="button" class="btn btn-secondary">Secondary</button>
+      <button type="button" class="btn btn-success">Success</button>
+      <button type="button" class="btn btn-danger">Danger</button>
+      <button type="button" class="btn btn-warning">Warning</button>
+      <button type="button" class="btn btn-info">Info</button>
+      <button type="button" class="btn btn-light">Light</button>
+      <button type="button" class="btn btn-dark">Dark</button>
+      <button type="button" class="btn btn-link">Link</button>
     </div>
 
     <div class="container my-4">
       <h2>아웃라인 버튼들</h2>
-      <button type="button" class="btn btn-outline-primary">primary</button>
-      <button type="button" class="btn btn-outline-secondary">secondary</button>
-      <button type="button" class="btn btn-outline-success">success</button>
-      <button type="button" class="btn btn-outline-danger">danger</button>
-      <button type="button" class="btn btn-outline-warning">warning</button>
-      <button type="button" class="btn btn-outline-info">info</button>
-      <button type="button" class="btn btn-outline-light">light</button>
-      <button type="button" class="btn btn-outline-dark">dark</button>
+      <button type="button" class="btn btn-outline-primary">Primary</button>
+      <button type="button" class="btn btn-outline-secondary">Secondary</button>
+      <button type="button" class="btn btn-outline-success">Success</button>
+      <button type="button" class="btn btn-outline-danger">Danger</button>
+      <button type="button" class="btn btn-outline-warning">Warning</button>
+      <button type="button" class="btn btn-outline-info">Info</button>
+      <button type="button" class="btn btn-outline-light">Light</button>
+      <button type="button" class="btn btn-outline-dark">Dark</button>
     </div>
 
     <div class="container my-4">
       <h2>버튼 크기 변경</h2>
       <button type="button" class="btn btn-outline-primary btn-lg">Primary 큼</button>
-      <button type="button" class="btn btn-outline-primary">Primary</button>
+      <button type="button" class="btn btn-outline-primary">Primary 기본</button>
       <button type="button" class="btn btn-outline-primary btn-sm">Primary 작음</button>
     </div>
 
@@ -49,11 +50,11 @@
     <div class="container my-4">
       <h2>버튼 그룹</h2>
       <div class="btn-group" role="group">
-        <button class="btn btn-primary">왼쪽 버튼</button>
-        <button class="btn btn-secondary">중앙 버튼</button>
-        <button class="btn btn-secondary">중앙 버튼</button>
-        <button class="btn btn-secondary">중앙 버튼</button>
-        <button class="btn btn-success">오른쪽 버튼</button>
+        <button class="btn btn-primary">왼쪽버튼</button>
+        <button class="btn btn-secondary">중앙버튼1</button>
+        <button class="btn btn-info">중앙버튼2</button>
+        <button class="btn btn-secondary">중앙버튼3</button>
+        <button class="btn btn-success">오른쪽버튼</button>
       </div>
     </div>
 
@@ -62,20 +63,20 @@
       <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">드롭다운</button>
       <ul class="dropdown-menu">
         <li><a class="dropdown-item" href="#">메뉴항목1</a></li>
-        <!-- #은 나 자신 -->
         <li><a class="dropdown-item" href="#">메뉴항목2</a></li>
         <li><a class="dropdown-item" href="#">메뉴항목3</a></li>
       </ul>
     </div>
 
     <div class="container my-4">
-      <h2>로딩중 버튼 스피너(spinner)</h2>
+      <h2>로딩중... 버튼... 스피너(spinner)</h2>
       <button class="btn btn-primary" type="button" disabled>
-        로딩중
         <span class="spinner-border spinner-border-sm" role="status"></span>
+        로딩중...
       </button>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- 부스트랩 JS 가져온다 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
