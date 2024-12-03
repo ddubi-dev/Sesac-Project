@@ -1,95 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 부트스트랩 CSS 가져온다 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
     <title>Document</title>
   </head>
-  <body class="bg-dark light">
-    <!-- navbar -->
-    <nav class="navbar navbar-expand-lg nav-dark bg-dark">
+  <body class="bg-dark text-light">
+    <!-- navbar 추가 -->
+    <nav class="navbar navbar-dark navbar-expand-sm">
       <div class="container-fluid">
-        <a class="navbar-brand text-light" href="#">MyLogo</a>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex flex-row">
-          <li class="nav-item">
-            <a class="nav-link text-light" href="#">User</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-light" href="#">Order</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-light" href="#">Order Item</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-light" href="#">Item</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-light" href="#">Store</a>
-          </li>
-        </ul>
+        <a class="navbar-brand" href="#">마이CRM</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">User</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Order</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Order Item</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Item</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Store</a>
+            </li>
+          </ul>
+          <button class="btn btn-outline-secondary" id="theme-toggle">Switch to 라이트모드</button>
+        </div>
       </div>
-
-      <button class="btn-light" id="theme-toggle">Switch to light/dark</button>
     </nav>
 
-    <!-- table -->
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Column 1</th>
-          <th scope="col">Column 2</th>
-          <th scope="col">Column 3</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Data 1</td>
-          <td>Data 2</td>
-          <td>Data 3</td>
-        </tr>
-        <tr>
-          <td>Data 4</td>
-          <td>Data 5</td>
-          <td>Data 6</td>
-        </tr>
-        <tr>
-          <td>Data 7</td>
-          <td>Data 8</td>
-          <td>Data 9</td>
-        </tr>
-      </tbody>
-    </table>
+    <!-- table 추가 -->
+    <div class="container mt-4">
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>Column 1</th>
+            <th>Column 2</th>
+            <th>Column 3</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Data 1</td>
+            <td>Data 2</td>
+            <td>Data 3</td>
+          </tr>
+          <tr>
+            <td>Data 4</td>
+            <td>Data 5</td>
+            <td>Data 6</td>
+          </tr>
+          <tr>
+            <td>Data 7</td>
+            <td>Data 8</td>
+            <td>Data 9</td>
+          </tr>
+          <tr>
+            <td>Data 10</td>
+            <td>Data 11</td>
+            <td>Data 12</td>
+          </tr>
+          <tr>
+            <td>Data 13</td>
+            <td>Data 14</td>
+            <td>Data 15</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-    <!-- pagination -->
+    <!-- pagination 추가 -->
     <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
+      <ul class="pagination justify-content-center">
+        <li class="page-item"><a class="page-link bg-dark text-light" href="#">&laquo;</a></li>
         <li class="page-item"><a class="page-link bg-dark text-light" href="#">1</a></li>
         <li class="page-item"><a class="page-link bg-dark text-light" href="#">2</a></li>
         <li class="page-item"><a class="page-link bg-dark text-light" href="#">3</a></li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
+        <li class="page-item"><a class="page-link bg-dark text-light" href="#">&raquo;</a></li>
       </ul>
     </nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
+    <!-- 부스트랩 JS 가져온다 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      // 버튼 이벤트를 추가해서, 해당 버튼 클릭시 dark/light class 속성 추가/삭제
+      // 버튼 이벤트를 추가해서, 해당 버튼 클릭시 dark/light class속성 추가/삭제
       const themeToggleBtn = document.getElementById("theme-toggle");
       themeToggleBtn.addEventListener("click", () => {
-        // 여기에 클래스 추가 삭제 코드 작성하기
-        const isDarkMode = document.body.classList.contains("bg-dart");
+        const isDarkMode = document.body.classList.contains("bg-dark");
 
-        document.body.classList.toggle("bg-dark", !isDartMode);
+        document.body.classList.toggle("bg-dark", !isDarkMode);
 
         const navbar = document.querySelector(".navbar");
         navbar.classList.toggle("navbar-light", isDarkMode);
@@ -97,13 +105,15 @@
 
         const table = document.querySelector(".table");
         table.classList.toggle("table-light", isDarkMode);
-        table.classList.toggle("table-dart");
+        table.classList.toggle("table-dark", !isDarkMode);
 
-        const pageLinks = document.querySelector(".page-link");
+        const pageLinks = document.querySelectorAll(".page-link");
         pageLinks.forEach((link) => {
           link.classList.toggle("bg-dark", !isDarkMode);
           link.classList.toggle("text-light", !isDarkMode);
         });
+
+        themeToggleBtn.textContent = isDarkMode ? "Switch to 다크모드" : "Switch to 라이트모드";
       });
     </script>
   </body>
