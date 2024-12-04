@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => {
   const [loading, setLoading] = useState(false); // 초기값 false
@@ -41,7 +40,7 @@ const App = () => {
   // 최초 한 번 불리고, 나머지는 event-driven
 
   // 데이터 렌더링(js 문법 html 반환)
-  const renderData = (data) => {
+  const renderData = () => {
     return (data) => {
       if (!data) {
         return <p>No data loaded.</p>;
@@ -69,46 +68,54 @@ const App = () => {
     setClearing(false);
   };
   return (
-    <div className="container my-4 ">
-      <button className="btn btn-primary" onClick={() => setCount(count + 1)} disabled={loading || clearing}>
-        {loading ? (
-          <>
-            <span className="spinner-border spinner-border-sm"></span> Loading...
-          </>
-        ) : (
-          <div>Load Data ({count})</div>
-        )}
+    <div style={{ padding: "20px" }}>
+      <button onClick={() => setCount(count + 1)} disabled={loading || clearing}>
+        Load Data({count})
       </button>
+      {/* Event-driven */}
 
-      <button className="btn btn-danger ms-2" onClick={clearHandler} disabled={clearing || loading || data === null}>
-        {clearing ? (
-          <>
-            <span className="spinner-border spinner-border-sm"></span> Clearing...
-          </>
-        ) : (
-          <>Clear</>
-        )}
+      <button onClick={clearHandler} disabled={clearing || loading || data === null}>
+        Clear
       </button>
+      {/* 함수형 변수 */}
+      {/* or ()=>{   } : 익명 함수 안에 바로*/}
 
       {/* 결과를 출력할 공간 */}
       <div style={{ marginTop: "20px" }}>
         {/* HTML 구문 */}
-        {data ? (
+        {/* {data ? (
           data.error ? (
-            <div className="alert alert-danger">
-              <p style={{ color: "red" }}>데이터 로딩에 실패하였습니다.</p>
-            </div>
+            <p style={{ color: "red" }}>데이터 로딩에 실패하였습니다.</p>
           ) : (
-            <div className="alert alert-success">
+            <div>
               <h3>{data.title}</h3>
               <p>{data.body}</p>
             </div>
           )
         ) : (
-          <div className="alert alert-secondary">
-            <p>No data loaded.</p>
-          </div>
-        )}
+          <p>No data loaded.</p>
+        )} */}
+
+        {/* JS - if 구문 */}
+        <div style={{ marginTop: "20px" }}>
+          {(() => {
+            if (!data) {
+              return <p>No data loaded.</p>;
+            }
+            if (data.error) {
+              return <p style={{ color: "red" }}>데이터 로딩에 실패하였습니다.</p>;
+            }
+            return (
+              <div>
+                <h3>{data.title}</h3>
+                <p>{data.body}</p>
+              </div>
+            );
+          })()}
+        </div>
+
+        {/* 함수로 전달(분리) */}
+        {/* <div style={{ marginTop: "20px" }}>{renderData()}</div> */}
       </div>
     </div>
   );

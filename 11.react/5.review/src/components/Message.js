@@ -7,7 +7,7 @@ const Message = ({ count, message }) => {
   // message 가 변경되는 걸 감지해서
   // side-effect, message 변경으로 변경할 사항 담기!!
 
-  // 여기는 최초 1회, 페이지가 렌더링 될 때, 호출되는 것
+  // 내용이 없으면 최초 1회, 페이지가 렌더링 될 때, 호출되는 것
   useEffect(() => {
     console.log("컴포넌트 mounting");
     return () => {
