@@ -1,8 +1,11 @@
+import { useTheme } from "./ThemeContext";
+
 const Table = () => {
+  const { isDarkMode } = useTheme();
   return (
     <div>
-      <div class="container mt-4">
-        <table class="table table-dark table-striped">
+      <div className="container mt-4">
+        <table className={`table ${isDarkMode ? "table-dark table-striped" : "table-light table-striped"}`}>
           <thead>
             <tr>
               <th>Column 1</th>

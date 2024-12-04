@@ -1,45 +1,44 @@
+// import { useContext } from "react";
+// import ThemeContext from "./ThemeContext";
+
+import { useTheme } from "./ThemeContext";
+
 const Navbar = () => {
+  const { isDarkMode, toggleTheme } = useTheme();
+
   return (
     <div>
-      <nav class="navbar navbar-dark navbar-expand-sm">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">
+      <nav className={`navbar ${isDarkMode ? "navbar-dark navbar-expand-sm bg-dark " : "navbar-light navbar-expand-sm "}`}>
+        <div className="container-fluid">
+          <span className="navbar-brand" href="#">
             마이CRM
-          </a>
-          {/* <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+          </span>
+          {/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
           </button> */}
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <span className="nav-link active" aria-current="page" href="#">
                   User
-                </a>
+                </span>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  Order
-                </a>
+              <li className="nav-item">
+                <span className="nav-link">Order</span>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  Order Item
-                </a>
+              <li className="nav-item">
+                <span className="nav-link">Order Item</span>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  Item
-                </a>
+              <li className="nav-item">
+                <span className="nav-link">Item</span>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  Store
-                </a>
+              <li className="nav-item">
+                <span className="nav-link">Store</span>
               </li>
             </ul>
-            {/* <button class="btn btn-outline-secondary" id="theme-toggle">
-              Switch to 라이트모드
-            </button> */}
+            <button className="btn btn-outline-secondary" onClick={toggleTheme}>
+              {isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            </button>
           </div>
         </div>
       </nav>

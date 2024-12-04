@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
 
 // 빈 공간(Context)을 선언했음.
 const ThemeContext = createContext();
@@ -21,3 +21,8 @@ const ThemeSelector = ({ children }) => {
     </ThemeContext.Provider>
   );
 };
+
+// Custom Hook : 내가 직접 훅을 생성
+const useTheme = () => useContext(ThemeContext);
+
+export { ThemeSelector, useTheme };
