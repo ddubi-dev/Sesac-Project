@@ -11,6 +11,7 @@ const App = () => {
           <Route path="/" element={<Navigate to="/users"></Navigate>}></Route>
           <Route path="/users" element={<Users></Users>}></Route>
           <Route path="/users/:userId" element={<UserDetail></UserDetail>}></Route>
+          {/* 이 형태로 오면 UserDetail 열기? */}
         </Routes>
       </div>
     </Router>
