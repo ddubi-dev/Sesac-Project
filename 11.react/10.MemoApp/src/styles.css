@@ -46,7 +46,7 @@ button {
   cursor: pointer;
 }
 
-.check-box {
+.checkbox {
   cursor: pointer;
 }
 
@@ -56,4 +56,18 @@ button {
   width: 300px;
   padding: 8px;
   font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.drag-handle {
+  cursor: grab;
+  font-size: 20px;
+  margin-left: 10px;
+  color: #888;
+}
+
+.drag-handle:hover {
+  color: #333;
 }
