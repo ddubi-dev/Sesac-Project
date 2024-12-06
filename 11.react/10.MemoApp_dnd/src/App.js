@@ -15,12 +15,16 @@ const App = () => {
 
   const [searchQuery, setSearchQuery] = useState(""); // 검색 상태
   const [isDetailOpen, setIsDetailOpen] = useState(false); // 상세보기 여부
+  const [selectedMemo, setSelectedMemo] = useState(null); // 상세보기를 위해 선택한 항목
 
   const showDetail = (id) => {
+    const memo = memos.find((m) => m.id === id);
+    setSelectedMemo(memo);
     setIsDetailOpen(true);
   };
 
   const hideDetail = (id) => {
+    setSelectedMemo(null);
     setIsDetailOpen(false);
   };
 
@@ -96,7 +100,7 @@ const App = () => {
             </select> */}
       <MemoForm addMemo={addMemo} />
       <MemoList memos={filteredMemo} deleteMemo={deleteMemo} editMemo={editMemo} toggleDone={toggleComplete} reorderMemos={reorderMemos} showDetail={showDetail} />
-      {isDetailOpen && <MemoDetail onClose={hideDetail}></MemoDetail>}
+      {isDetailOpen && <MemoDetail onClose={hideDetail} memo={selectedMemo}></MemoDetail>}
     </div>
   );
 };
