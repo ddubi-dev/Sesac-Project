@@ -1,6 +1,6 @@
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-const MemoList = ({ memos, deleteMemo, editMemo, toggleDone, reorderMemos }) => {
+const MemoList = ({ memos, deleteMemo, editMemo, toggleDone, reorderMemos, showDetail, hideDetail }) => {
   const handleDragEnd = (result) => {
     const { source, destination } = result;
 
@@ -43,6 +43,9 @@ const MemoList = ({ memos, deleteMemo, editMemo, toggleDone, reorderMemos }) => 
                           disabled={memo.completed} // 완료된 메모는 수정 불가
                           onChange={(e) => editMemo(memo.id, e.target.value)}
                         />
+
+                        {/* 상세 보기 버튼 추가 */}
+                        <button onClick={() => showDetail(memo.id)}>상세보기</button>
 
                         {/* 버튼이 클릭 되었을때, 받아온 함수 호출 */}
                         <button onClick={() => deleteMemo(memo.id)}>삭제</button>

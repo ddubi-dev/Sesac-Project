@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import MemoForm from "./components/MemoForm";
 import MemoList from "./components/MemoList";
 import MemoSearch from "./components/MemoSearch";
+import MemoDetail from "./components/MemoDetail";
 import "./styles.css";
 
 const App = () => {
@@ -13,6 +14,15 @@ const App = () => {
   });
 
   const [searchQuery, setSearchQuery] = useState(""); // 검색 상태
+  const [isDetailOpen, setIsDetailOpen] = useState(false); // 상세보기 여부
+
+  const showDetail = (id) => {
+    setIsDetailOpen(true);
+  };
+
+  const hideDetail = (id) => {
+    setIsDetailOpen(false);
+  };
 
   const addMemo = (text) => {
     const newMemo = { id: Date.now(), text, completed: false }; // 고유ID와 텍스트값으로 메모 객체 생성
@@ -73,22 +83,20 @@ const App = () => {
     <div>
       <h1>메모앱 (투두리스트)</h1>
       {/* 1. <MemoSearch /> */}
-
       {/* 1. 이거 개별 컴포넌트로 만든다 */}
       {/* 2. 검색 함수를 구현한다 */}
       {/* 3. 검색 내용을 담을 상태변수를 만든다 */}
       {/* 4. 필터된 내용을 MemoList에 전달한다 */}
       <MemoSearch search={setSearchQuery} />
-
       {/* 2. MemoSort */}
       {/* <select>
                 <option>최신순</option>
                 <option>오래된순</option>
                 <option>알파벳순</option>
             </select> */}
-
       <MemoForm addMemo={addMemo} />
-      <MemoList memos={filteredMemo} deleteMemo={deleteMemo} editMemo={editMemo} toggleDone={toggleComplete} reorderMemos={reorderMemos} />
+      <MemoList memos={filteredMemo} deleteMemo={deleteMemo} editMemo={editMemo} toggleDone={toggleComplete} reorderMemos={reorderMemos} showDetail={showDetail} />
+      {isDetailOpen && <MemoDetail onClose={hideDetail}></MemoDetail>}
     </div>
   );
 };
