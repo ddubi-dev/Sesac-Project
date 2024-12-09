@@ -169,3 +169,40 @@ h1 {
   justify-content: flex-end;
   gap: 10px;
 }
+
+.attachment-section {
+  margin-top: 20px;
+}
+
+.attachment-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.attachment-list li {
+  margin-bottom: 10px;
+}
+
+.attachment-thumbnail {
+  width: 100px;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.delete-attachment {
+  padding: 5px 10px;
+  margin-left: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8d7da;
+  color: #721c24;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delete-attachment:hover {
+  background-color: #f5c6cb;
+  border-color: #f1b0b7;
+}
