@@ -18,7 +18,7 @@ env.addFilter("stringify", function (obj) {
   return JSON.stringify(obj);
 });
 
-app.set("view engin", "html");
+app.set("view engine", "html");
 
 // 미들 웨어 설정
 app.use(morgan("dev")); // 디버깅
@@ -36,20 +36,18 @@ app.get("/search", async (req, res) => {
     // 400: bad parameter
   }
 
-  const maxResultPerPage = 10;
+  const url = `https://www.googleapis.com/youtube/v3/search`;
 
   const params = {
     part: "snippet",
     q: query,
     type: "video",
-    maxResults: maxResultPerPage,
+    maxResults: 10,
     key: API_KEY,
   };
 
-  const url = `https://www.googleapis.com/youtube/v3/search`;
-
+  // axios로 요청. 결과 목록을 이쁘게 json 으로 처리
   try {
-    // axios로 요청. 결과 목록을 이쁘게 json 으로 처리
     const response = await axios.get(url, { params });
     // 오류 처리 필요
 
@@ -60,9 +58,9 @@ app.get("/search", async (req, res) => {
     // 필요한 데이터만 골라서 주기
     const videos = response.data.items.map((item) => ({
       videoId: item.id.videoId,
-      title: item.snippet.title,
+      title: decodeHtmlEntities(item.snippet.title), // 영상 제목
       description: item.snippet.description,
-      thumbnailUrl: item.snippet.thumbnails.default.url,
+      thumbnailUrl: item.snippet.thumbnails.default.url, // 썸네일 URL (작은 사이즈)
     }));
 
     res.render("index.html", { videos });
@@ -78,10 +76,9 @@ function decodeHtmlEntities(text) {
     "&quot;": '"', // double quote
     "&amp;": "&",
     "&lt;": "<",
-    "$gt;": ">",
+    "&gt;": ">",
   };
-
-  return text.replace(/&#39;|&quot;|&amp;|&lt;|$gt;/g, (match) => entities[match] || match);
+  return text.replace(/&#39;|&quot;|&amp;|&lt;|&gt;/g, (match) => entities[match] || match);
 }
 
 app.get("/play", (req, res) => {
