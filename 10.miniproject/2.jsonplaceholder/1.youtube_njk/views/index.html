@@ -15,6 +15,12 @@
       </form>
 
       <!-- 플레이어 -->
+      {% if selectedVideo %}
+      <div style="margin-top: 20px">
+        <h2>{{ selectedVideo.title }}</h2>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ selectedVideo.videoId }}"> </iframe>
+      </div>
+      {% endif %}
 
       <!-- 결과 목록 -->
       <!-- <ul>
@@ -32,7 +38,10 @@
       <ul>
         {% for video in videos %}
         <li>
-          <a href="https://www.youtube.com/watch?v={{ video.videoId }}">
+          <!-- <a href="https://www.youtube.com/watch?v={{ video.videoId }}"> -->
+          <a href="/play?videoId={{ video.videoId }}&videos={{ videos | stringify | urlencode }}">
+            <!-- url로  videos 보내는 거 -> 좋은 방법은 아님 -->
+            <!-- post 로 body에 담아서 보내는 게 더 나음 -->
             <img src="{{ video.thumbnailUrl}}" />
           </a>
           <h3>{{ video.title }}</h3>

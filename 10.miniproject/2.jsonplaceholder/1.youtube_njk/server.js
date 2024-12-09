@@ -7,11 +7,16 @@ const nunjucks = require("nunjucks"); // 템플릿엔진(서버사이드 렌더�
 const app = express();
 const PORT = 3000;
 const API_KEY = process.env.YOUTUBE_API_KEY;
-nunjucks.configure("views", {
+const env = nunjucks.configure("views", {
   autoescape: true,
   express: app,
 });
 // 눈적스 초기화
+
+// 사용자 정의 필터를 추가
+env.addFilter("stringify", function (obj) {
+  return JSON.stringify(obj);
+});
 
 app.set("view engin", "html");
 
@@ -65,6 +70,27 @@ app.get("/search", async (req, res) => {
     console.error("요청 오류: ", error);
     return res.status(500).send("알 수 없는 서버 오류");
   }
+});
+
+function decodeHtmlEntities(text) {
+  const entities = {
+    "&#39;": "'", // single quote
+    "&quot;": '"', // double quote
+    "&amp;": "&",
+    "&lt;": "<",
+    "$gt;": ">",
+  };
+
+  return text.replace(/&#39;|&quot;|&amp;|&lt;|$gt;/g, (match) => entities[match] || match);
+}
+
+app.get("/play", (req, res) => {
+  const videoId = req.query.videoId;
+  const videos = JSON.parse(decodeURIComponent(req.query.videos || "[]"));
+
+  const selectedVideo = videos.find((video) => video.videoId === videoId);
+
+  res.render("index", { videos, selectedVideo });
 });
 
 // 라우터
