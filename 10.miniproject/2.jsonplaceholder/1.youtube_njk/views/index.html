@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>유튜브 검색기</title>
+  </head>
+  <body>
+    <div container="container">
+      <h1>유튜브 검색</h1>
+      <!-- 검색창 -->
+      <form action="/search" method="GET">
+        <!-- 제출시 /search 로 url 요청 -->
+        <input type="text" name="q" placeholder="검색 키워드를 입력하세요." />
+        <button type="submit">검색</button>
+      </form>
+
+      <!-- 플레이어 -->
+
+      <!-- 결과 목록 -->
+      <!-- <ul>
+        {% for video in videos %}
+        <li>
+          <a href="https://www.youtube.com/watch?v={{ video.id.videoId }}">
+            <img src="{{ video.snippet.thumnails.default.url }}" />
+          </a>
+          <h3>{{ video.snippet.title }}</h3>
+          <p>{{ video.snippet.description }}</p>
+        </li>
+        {% endfor %}
+      </ul> -->
+
+      <ul>
+        {% for video in videos %}
+        <li>
+          <a href="https://www.youtube.com/watch?v={{ video.videoId }}">
+            <img src="{{ video.thumbnailUrl}}" />
+          </a>
+          <h3>{{ video.title }}</h3>
+          <p>{{ video.description }}</p>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </body>
+</html>
