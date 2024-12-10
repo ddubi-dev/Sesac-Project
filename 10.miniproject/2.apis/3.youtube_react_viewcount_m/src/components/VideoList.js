@@ -3,6 +3,11 @@ import ViewCount from "./ViewCount";
 
 const VideoList = ({ videos }) => {
   const [viewCount, setViewCount] = useState({}); // viewCount는 객체로 관리
+  const [currentVideoId, setCurrentVideoId] = useState(null);
+
+  const handleVideoClick = (videoId) => {
+    setCurrentVideoId(videoId); // 선택된 비디오 ID로 업데이트
+  };
 
   useEffect(() => {
     // viewCount가 변경될 때마다 해당 조회수를 가진 비디오 목록을 업데이트합니다.
@@ -33,10 +38,24 @@ const VideoList = ({ videos }) => {
 
   return (
     <div>
+      {/* 선택된 비디오를 상단에 임베드 */}
+      {currentVideoId && (
+        <div>
+          <iframe width="560" height="315" src={`https://www.youtube.com/embed/${currentVideoId}`} style={{ border: "none" }} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen title="YouTube Video Player"></iframe>
+        </div>
+      )}
+
+      {/* 비디오 목록 표시 */}
       <ul>
         {videos.map((video) => (
           <li key={video.id.videoId}>
-            <a href={`/play?videoId=${video.id.videoId}&videos=${encodeURIComponent(JSON.stringify(videos))}`}>
+            <a
+              onClick={(e) => {
+                e.preventDefault();
+                handleVideoClick(video.id.videoId);
+              }}
+              href="#"
+            >
               <img src={video.snippet.thumbnails.default.url} alt={video.snippet.title}></img>
             </a>
             <div>
