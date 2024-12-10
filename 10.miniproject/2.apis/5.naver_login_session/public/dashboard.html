@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>사용자 정보 출력</h1>
+    <div id="userInfo"></div>
+
+    <a href="/logout"><img src="btnG_로그아웃.png" width="200" /></a>
+
+    <script>
+      fetch("/api/user")
+        .then((response) => response.json())
+        .then((user) => {
+          // console.log("user: ", user);
+
+          const userInfo = document.getElementById("userInfo");
+
+          Object.keys(user).forEach((key) => {
+            const listItem = document.createElement("li");
+            listItem.textContent = `${key} : ${user[key]}`;
+            userInfo.appendChild(listItem);
+          });
+        });
+    </script>
+  </body>
+</html>
