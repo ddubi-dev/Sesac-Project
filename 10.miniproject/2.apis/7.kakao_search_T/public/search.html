@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>카카오 검색기</title>
+  </head>
+  <body>
+    <h1>Koogle</h1>
+    <form id="search-form">
+      <input type="text" id="query" placeholder="검색어를 입력하시오." required />
+      <button type="button" data-type="web">웹검색</button>
+      <!-- 부트스트랩 하면서 잠깐 했었음. data-type -->
+      <button type="button" data-type="image">이미지검색</button>
+      <button type="button" data-type="vclip">비디오검색</button>
+    </form>
+
+    <div id="results">
+      <!-- 결과 출력하는 곳 -->
+    </div>
+
+    <script>
+      document.querySelectorAll("button").forEach((button) => {
+        button.addEventListener("click", async (e) => {
+          const query = document.getElementById("query").value;
+          const type = e.target.getAttribute("data-type");
+
+          const response = await fetch(`/api/search?query=${encodeURIComponent(query)}&type=${type}`);
+
+          if (!response.ok) {
+            console.log("에러");
+          } else {
+            const results = await response.json();
+            // console.log(results);
+
+            // displayResult(results);
+            displayResult(results, type);
+          }
+        });
+      });
+
+      // 어떻게 display 할지만 고민하면 됨
+      function displayResult(results, type) {
+        const resultsContainer = document.getElementById("results");
+        // resultsContainer.innerHTML = JSON.stringify(results);
+        resultsContainer.innerHTML = "";
+
+        if (type === "web") {
+          results.documents.forEach((item) => {
+            const resultDiv = document.createElement("div");
+            // resultDiv.innerText=``;
+            // 태그를 프로세싱하기위해 innerHTML로 했음. react는 보안 문제로 안됨. 라이브러리를 쓰거나 직접 함수를 짜야함.
+
+            // 각각 함수로 짜는게 훨씬 좋음
+
+            // resultDiv.innerText=``;
+            // 태그를 프로세싱하기위해 innerHTML로 했음. react는 보안 문제로 안됨. 라이브러리를 쓰거나 직접 함수를 짜야함.
+            resultDiv.innerHTML = `
+                <h3>${item.title}</h3>
+                <p>${item.contents}</p>
+                <a href="${item.url}" target="_blank">${item.url}</a>
+            `;
+            resultsContainer.appendChild(resultDiv);
+          });
+        } else if (type === "image") {
+          results.documents.forEach((item) => {
+            const resultDiv = document.createElement("div");
+            resultDiv.innerHTML = `
+                        <img src="${item.thumbnail_url}" alt="Thumbnail">
+                    `;
+            resultsContainer.appendChild(resultDiv);
+          });
+        } else if (type === "vclip") {
+          results.documents.forEach((item) => {
+            const resultDiv = document.createElement("div");
+            resultDiv.innerHTML = `
+                        <img src="${item.thumbnail}" alt="Thumbnail">
+                    `;
+            resultsContainer.appendChild(resultDiv);
+          });
+        } else {
+          // 오류 처리
+        }
+      }
+    </script>
+  </body>
+</html>
