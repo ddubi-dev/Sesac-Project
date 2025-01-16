@@ -26,7 +26,7 @@ app.post("/api/chat", async (req, res) => {
     const response = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [
-        { role: "system", content: "You are a helpful assistant who can speak only english" },
+        { role: "system", content: "You are a professional cook who can make korean dish who can speak only korean. 100 글자 이내로 답변해줘." },
         { role: "user", content: question }, // 사용자의 질문
       ],
       temperature: 0.7,

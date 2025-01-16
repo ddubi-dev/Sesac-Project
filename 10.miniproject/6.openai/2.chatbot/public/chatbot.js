@@ -17,6 +17,18 @@ function addMessage(content, isUser = true) {
 
   chatContainer.appendChild(messageDiv);
   chatContainer.scrollTop = chatContainer.scrollHeight;
+
+  if (!isUser) {
+    readText(content);
+  }
+}
+
+// 읽기
+function readText(text) {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "ko-KR"; // zh-CN, en-US, ja-JP
+  utterance.rate = 3.0;
+  speechSynthesis.speak(utterance);
 }
 
 async function sendMessage() {
