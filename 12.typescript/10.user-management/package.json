@@ -1,0 +1,15 @@
+{
+  "name": "10.user-management",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server",
+    "dev": "ts-node-dev src/server",
+    "test": "ts-node test/test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
