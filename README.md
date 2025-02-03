@@ -4,26 +4,26 @@
 2024-10-07 ~ 2025-01-24
 
 ### 교육 내용
-1️⃣ 웹 개발 기초</br>
+1️⃣ 웹 개발 기초
 - HTML/CSS 기본 문법 학습</br>
 - JavaScript 문법 및 프로그래밍 개념 익히기</br>
 - CRM 실습 (데이터 생성기 프로젝트)</br>
 
-2️⃣ Node.js & Express를 활용한 백엔드 개발</br>
+2️⃣ Node.js & Express를 활용한 백엔드 개발
 - 비동기 프로그래밍 개념 및 활용</br>
 - Express 프레임워크를 이용한 라우팅 및 미들웨어 설계</br>
 - 템플릿 엔진과 REST API 설계 실습</br>
 
-3️⃣ DB 백엔드 및 웹 서비스 구축</br>
+3️⃣ DB 백엔드 및 웹 서비스 구축
 - 데이터베이스 개념 및 SQL 기본 문법 학습</br>
 - CRUD 기능 구현 및 다중 테이블 설계</br>
 - Express 기반의 CRM 개발</br>
 
-4️⃣ 프론트엔드 개발 심화 (Bootstrap & React)</br>
+4️⃣ 프론트엔드 개발 심화 (Bootstrap & React)
 - Bootstrap을 활용한 UI/UX 디자인</br>
 - React를 활용한 프론트엔드 개발 및 상태 관리</br>
 
-5️⃣ AWS & 리눅스</br>
+5️⃣ AWS & 리눅스
 - Linux 환경에서 웹 서비스 운영 및 관리 실습</br>
 - AWS EC2를 이용한 서버 구축 및 배포</br>
 
